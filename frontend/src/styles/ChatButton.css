@@ -1,0 +1,74 @@
+/* ChatButton.css - Floating Action Button Styles */
+
+.chat-fab-button {
+  position: fixed;
+  z-index: 999;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s ease;
+  font-size: 0;
+  outline: none;
+}
+
+.chat-fab-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.chat-fab-button:active {
+  transform: scale(0.95);
+}
+
+.chat-fab-bottom-right {
+  bottom: 24px;
+  right: 24px;
+}
+
+.chat-fab-bottom-left {
+  bottom: 24px;
+  left: 24px;
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+  .chat-fab-button {
+    width: 56px;
+    height: 56px;
+  }
+
+  .chat-fab-bottom-right {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .chat-fab-bottom-left {
+    bottom: 16px;
+    left: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-fab-button {
+    width: 52px;
+    height: 52px;
+  }
+
+  .chat-fab-bottom-right {
+    bottom: 12px;
+    right: 12px;
+  }
+
+  .chat-fab-bottom-left {
+    bottom: 12px;
+    left: 12px;
+  }
+}
