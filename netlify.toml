@@ -12,22 +12,6 @@
   # Pasta onde ficam as Netlify Functions
   functions = "netlify/functions"
 
-# Configuração do servidor de desenvolvimento local
-[dev]
-  # Porta do servidor de funções (netlify functions:serve roda aqui)
-  functionsPort = 9999
-
-  # Porta do frontend (npm run dev roda aqui)
-  # Aponta para o dev server do Vite/React no Terminal 1
-  targetPort = 5173
-
-  # Porta do proxy unificado do Netlify Dev (opcional, se usar `netlify dev`)
-  port = 8888
-
-  # Comando que o `netlify dev` executa automaticamente no lugar do Terminal 1
-  # (só é usado se você rodar `netlify dev` em vez dos dois terminais separados)
-  command = "cd frontend && npm run dev"
-
 # Redireciona tudo para o index.html (necessário para SPA)
 [[redirects]]
   from = "/*"
