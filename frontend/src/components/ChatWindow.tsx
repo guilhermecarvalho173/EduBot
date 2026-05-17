@@ -7,24 +7,32 @@ interface ChatWindowProps {
   isOpen: boolean;
   onClose: () => void;
   typebotId?: string;
+  initialMessage?: string;
 }
 
-export function ChatWindow({ isOpen, onClose, typebotId }: ChatWindowProps) {
-  const { messages, loading, error, sendMessage, resetError } = useTypebotChat({ typebotId });
+export function ChatWindow({ isOpen, onClose, typebotId, initialMessage }: ChatWindowProps) {
+  const { messages, loading, error, sendMessage, clearMessages, resetError } = useTypebotChat({ typebotId });
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const startedRef = useRef(false);
 
-  // Auto-scroll para a última mensagem
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Inicia a conversa automaticamente ao abrir o chat
+  // Inicia a conversa ao abrir o chat
   useEffect(() => {
-    if (isOpen && messages.length === 0) {
-      sendMessage('Olá');
+    if (isOpen && !startedRef.current) {
+      startedRef.current = true;
+      // Se veio de um card, envia o tema diretamente; senão envia "Olá"
+      sendMessage(initialMessage || 'Olá');
     }
-  }, [isOpen]);
+    // Ao fechar, reseta para permitir nova conversa na próxima abertura
+    if (!isOpen) {
+      startedRef.current = false;
+      clearMessages();
+    }
+  }, [isOpen, initialMessage]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,14 +46,12 @@ export function ChatWindow({ isOpen, onClose, typebotId }: ChatWindowProps) {
     }
   };
 
-  // Clique em um botão de opção
   const handleButtonClick = (content: string) => {
     sendMessage(content);
   };
 
   if (!isOpen) return null;
 
-  // Verifica se a última mensagem do bot ainda tem botões ativos
   const lastBotMessage = [...messages].reverse().find((m) => m.role === 'bot');
   const activeButtons = lastBotMessage?.buttons ?? [];
 
@@ -53,7 +59,6 @@ export function ChatWindow({ isOpen, onClose, typebotId }: ChatWindowProps) {
     <div className="chat-window-overlay" onClick={onClose}>
       <div className="chat-window" onClick={(e) => e.stopPropagation()}>
 
-        {/* Header */}
         <div className="chat-window-header">
           <div className="chat-header-content">
             <h2>EduBot Chat</h2>
@@ -64,7 +69,6 @@ export function ChatWindow({ isOpen, onClose, typebotId }: ChatWindowProps) {
           </button>
         </div>
 
-        {/* Área de mensagens */}
         <div className="chat-messages">
           {messages.map((msg, index) => (
             <div key={index} className={`chat-message chat-message-${msg.role}`}>
@@ -80,7 +84,6 @@ export function ChatWindow({ isOpen, onClose, typebotId }: ChatWindowProps) {
             </div>
           ))}
 
-          {/* Botões de opção da última mensagem do bot */}
           {!loading && activeButtons.length > 0 && (
             <div className="chat-buttons">
               {activeButtons.map((btn) => (
@@ -95,7 +98,6 @@ export function ChatWindow({ isOpen, onClose, typebotId }: ChatWindowProps) {
             </div>
           )}
 
-          {/* Indicador de carregamento */}
           {loading && (
             <div className="chat-message chat-message-bot">
               <div className="message-content loading-animation">
@@ -106,20 +108,16 @@ export function ChatWindow({ isOpen, onClose, typebotId }: ChatWindowProps) {
             </div>
           )}
 
-          {/* Erro */}
           {error && (
             <div className="chat-error-message">
               <strong>Erro:</strong> {error}
-              <button onClick={resetError} className="error-dismiss">
-                Descartar
-              </button>
+              <button onClick={resetError} className="error-dismiss">Descartar</button>
             </div>
           )}
 
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Campo de texto */}
         <form className="chat-input-form" onSubmit={handleSubmit}>
           <input
             ref={inputRef}
@@ -128,12 +126,7 @@ export function ChatWindow({ isOpen, onClose, typebotId }: ChatWindowProps) {
             placeholder="Digite sua pergunta..."
             disabled={loading}
           />
-          <button
-            type="submit"
-            className="chat-send-button"
-            disabled={loading}
-            aria-label="Enviar mensagem"
-          >
+          <button type="submit" className="chat-send-button" disabled={loading} aria-label="Enviar">
             <Send size={18} />
           </button>
         </form>
