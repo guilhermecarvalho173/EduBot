@@ -1,19 +1,14 @@
 /**
  * Netlify Function: Proxy seguro para integração com Typebot API
  * Endpoint: /.netlify/functions/typebot-proxy
- * 
- * Recebe mensagens do usuário e retorna respostas do fluxo Typebot
+ *
+ * Usa a API v1 do Typebot viewer.
+ * Retorna texto do bot + botões de opção (choice input) quando presentes.
  */
 
-// Configurações
 const TYPEBOT_ID = process.env.TYPEBOT_ID || 'edubot-uscs-1m67yud';
-const TYPEBOT_API_URL = 'https://api.typebot.io/conversations';
 
-/**
- * Manipulador principal da função
- */
 exports.handler = async (event, context) => {
-  // CORS headers para permitir requisições do frontend
   const headers = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
@@ -21,16 +16,10 @@ exports.handler = async (event, context) => {
     'Access-Control-Allow-Headers': 'Content-Type'
   };
 
-  // Tratamento de preflight CORS
   if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 204,
-      headers,
-      body: ''
-    };
+    return { statusCode: 204, headers, body: '' };
   }
 
-  // Apenas POST é permitido
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
@@ -40,106 +29,103 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    // Parse do corpo da requisição
     const body = JSON.parse(event.body || '{}');
     const { message, sessionId } = body;
 
-    // Validação de entrada
     if (!message || typeof message !== 'string' || message.trim() === '') {
       return {
         statusCode: 400,
         headers,
+        body: JSON.stringify({ error: 'Campo "message" é obrigatório.' })
+      };
+    }
+
+    console.log(`[Typebot] Mensagem: "${message}" | sessionId: ${sessionId || 'nova sessão'}`);
+
+    const apiUrl = sessionId
+      ? `https://typebot.io/api/v1/sessions/${sessionId}/continueChat`
+      : `https://typebot.io/api/v1/typebots/${TYPEBOT_ID}/startChat`;
+
+    const typebotResponse = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: message.trim() })
+    });
+
+    const rawText = await typebotResponse.text();
+    console.log(`[Typebot] Status: ${typebotResponse.status} | Resposta: ${rawText.substring(0, 400)}`);
+
+    let typebotData;
+    try {
+      typebotData = JSON.parse(rawText);
+    } catch {
+      console.error('[Typebot] Resposta não é JSON:', rawText.substring(0, 500));
+      return {
+        statusCode: 502,
+        headers,
         body: JSON.stringify({
-          error: 'Campo "message" é obrigatório e deve ser uma string não-vazia'
+          error: 'Typebot retornou resposta inválida (não é JSON)',
+          raw: rawText.substring(0, 300)
         })
       };
     }
 
-    console.log(`[Typebot] Enviando mensagem: "${message}"`);
-
-    // Montagem do payload para Typebot API
-    const requestPayload = {
-      typebot: TYPEBOT_ID,
-      messages: [
-        {
-          role: 'user',
-          content: message.trim()
-        }
-      ]
-    };
-
-    // Se há sessionId, inclui para manter contexto da conversa
-    if (sessionId && typeof sessionId === 'string') {
-      requestPayload.sessionId = sessionId;
-    }
-
-    // Chamada à API Typebot
-    const typebotResponse = await fetch(TYPEBOT_API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestPayload)
-    });
-
-    // Tratamento de erros da API Typebot
     if (!typebotResponse.ok) {
-      console.error(`[Typebot] Erro ${typebotResponse.status}: ${typebotResponse.statusText}`);
-      const errorData = await typebotResponse.json().catch(() => ({}));
-      
       return {
         statusCode: 502,
         headers,
         body: JSON.stringify({
           error: 'Erro ao comunicar com Typebot API',
-          details: errorData
+          status: typebotResponse.status,
+          details: typebotData
         })
       };
     }
 
-    const typebotData = await typebotResponse.json();
-
-    // Extração de mensagens
+    const newSessionId = typebotData.sessionId || sessionId;
     const messages = typebotData.messages || [];
-    
-    // Encontra a última mensagem do bot
-    const botMessages = messages.filter(m => m.role === 'bot');
-    const lastBotMessage = botMessages.length > 0 ? botMessages[botMessages.length - 1] : null;
+    const input = typebotData.input || null;
 
-    // Se não houver resposta do bot, retorna erro
-    if (!lastBotMessage) {
-      console.warn('[Typebot] Nenhuma resposta do bot encontrada');
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({
-          error: 'Nenhuma resposta recebida do bot',
-          messages: messages
-        })
-      };
+    const botText = messages
+      .filter(m => m.type === 'text')
+      .map(m => {
+        if (typeof m.content === 'string') return m.content;
+        const richText = m.content?.richText || m.richText;
+        if (richText) {
+          return richText
+            .map(block => block.children?.map(c => c.text || '').join('') || '')
+            .join('\n');
+        }
+        return '';
+      })
+      .filter(Boolean)
+      .join('\n');
+
+    const buttons = [];
+    if (input?.type === 'choice input' && Array.isArray(input.items)) {
+      input.items.forEach(item => {
+        if (item.id && item.content) {
+          buttons.push({ id: item.id, content: item.content });
+        }
+      });
     }
 
-    // Log de sucesso
-    console.log(`[Typebot] Resposta do bot: "${lastBotMessage.content}"`);
+    console.log(`[Typebot] Texto: "${botText}" | Botões: ${buttons.length}`);
 
-    // Resposta com sucesso
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({
         success: true,
-        response: lastBotMessage.content,
-        sessionId: typebotData.sessionId || sessionId,
-        allMessages: messages,
-        botMessages: botMessages,
+        response: botText,
+        buttons,
+        sessionId: newSessionId,
         timestamp: new Date().toISOString()
       })
     };
 
   } catch (error) {
-    // Tratamento de erros gerais
     console.error('[Typebot] Erro geral:', error);
-    
     return {
       statusCode: 500,
       headers,

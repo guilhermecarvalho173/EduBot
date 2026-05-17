@@ -1,18 +1,25 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 
 interface UseTypebotChatOptions {
   typebotId?: string;
+}
+
+export interface ChatButton {
+  id: string;
+  content: string;
 }
 
 export interface ChatMessage {
   role: 'user' | 'bot';
   content: string;
   timestamp: Date;
+  buttons?: ChatButton[];
 }
 
 export function useTypebotChat(options?: UseTypebotChatOptions) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [sessionId, setSessionId] = useState<string | null>(null);
+  const sessionIdRef = useRef<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -23,25 +30,22 @@ export function useTypebotChat(options?: UseTypebotChatOptions) {
       setLoading(true);
       setError(null);
 
+      const userMsg: ChatMessage = {
+        role: 'user',
+        content: userMessage.trim(),
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, userMsg]);
+
       try {
-        // Adiciona mensagem do usuário localmente
-        const userMsg: ChatMessage = {
-          role: 'user',
-          content: userMessage.trim(),
-          timestamp: new Date(),
-        };
+        const currentSessionId = sessionIdRef.current;
 
-        setMessages((prev) => [...prev, userMsg]);
-
-        // Chamada para Netlify Function
-        const response = await fetch('/.netlify/functions/typebot-proxy', {
+        const response = await fetch('http://localhost:9999/.netlify/functions/typebot-proxy', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             message: userMessage.trim(),
-            sessionId: sessionId,
+            sessionId: currentSessionId,
             typebotId: options?.typebotId,
           }),
         });
@@ -52,16 +56,16 @@ export function useTypebotChat(options?: UseTypebotChatOptions) {
 
         const data = await response.json();
 
-        // Atualiza sessionId
         if (data.sessionId) {
           setSessionId(data.sessionId);
+          sessionIdRef.current = data.sessionId;
         }
 
-        // Adiciona resposta do bot
         const botMsg: ChatMessage = {
           role: 'bot',
-          content: data.response || 'Desculpe, não consegui processar sua mensagem.',
+          content: data.response || '',
           timestamp: new Date(),
+          buttons: data.buttons || [],
         };
 
         setMessages((prev) => [...prev, botMsg]);
@@ -74,12 +78,13 @@ export function useTypebotChat(options?: UseTypebotChatOptions) {
         setLoading(false);
       }
     },
-    [sessionId, options?.typebotId]
+    [options?.typebotId]
   );
 
   const clearMessages = useCallback(() => {
     setMessages([]);
     setSessionId(null);
+    sessionIdRef.current = null;
     setError(null);
   }, []);
 
