@@ -1,0 +1,4311 @@
+{
+  "version": "6.1",
+  "id": "edubot-uscs-v3",
+  "name": "Edubot USCS",
+  "events": [
+    {
+      "id": "evt-start",
+      "graphCoordinates": {
+        "x": 0,
+        "y": 0
+      },
+      "type": "start",
+      "outgoingEdgeId": "e-start"
+    }
+  ],
+  "groups": [
+    {
+      "id": "grp-welcome",
+      "graphCoordinates": {
+        "x": 200,
+        "y": 0
+      },
+      "title": "Boas-vindas",
+      "blocks": [
+        {
+          "id": "blk-welcome-img",
+          "type": "image",
+          "outgoingEdgeId": "e-welcome-img-txt",
+          "content": {
+            "url": "https://app.devin.ai/attachments/60d7f134-64d7-46ba-9e79-a825ff00363a/WhatsApp%2BImage%2B2026-05-16%2Bat%2B14.21.27.jpeg"
+          }
+        },
+        {
+          "id": "blk-welcome-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-welcome-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "Olá! Eu sou o EduBot, seu assistente virtual da USCS! Estou aqui para responder suas principais dúvidas. O que você gostaria de saber?"
+                  }
+                ],
+                "id": "bv1"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-welcome-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-welcome-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "Olá! Eu sou o EduBot, seu assistente virtual da USCS! Estou aqui para responder suas principais dúvidas. O que você gostaria de saber?",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-welcome-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-welcome-menu",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-welcome-menu",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "m1",
+              "content": "🎓 Desejo ingressar na USCS",
+              "outgoingEdgeId": "e-m-ingressar"
+            },
+            {
+              "id": "m2",
+              "content": "🏛️ Estou interessado em conhecer mais sobre a USCS",
+              "outgoingEdgeId": "e-m-conhecer"
+            },
+            {
+              "id": "m3",
+              "content": "📚 Já sou aluno da USCS",
+              "outgoingEdgeId": "e-m-aluno"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-ingressar",
+      "graphCoordinates": {
+        "x": 700,
+        "y": -600
+      },
+      "title": "Desejo Ingressar na USCS",
+      "blocks": [
+        {
+          "id": "blk-ingressar-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-ingressar-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "Que legal que você quer fazer parte da USCS! 🎓 Escolha o assunto que deseja saber mais:"
+                  }
+                ],
+                "id": "ing1"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-ingressar-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-ingressar-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "Que legal que você quer fazer parte da USCS! 🎓 Escolha o assunto que deseja saber mais:",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-ingressar-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-ingressar-menu",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-ingressar-menu",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "ing-i1",
+              "content": "✏️ Vestibular",
+              "outgoingEdgeId": "e-ing-vest"
+            },
+            {
+              "id": "ing-i2",
+              "content": "📝 Matrículas",
+              "outgoingEdgeId": "e-ing-mat"
+            },
+            {
+              "id": "ing-i3",
+              "content": "💵 Mensalidades",
+              "outgoingEdgeId": "e-ing-mens"
+            },
+            {
+              "id": "ing-i4",
+              "content": "🎁 Bolsas e Financiamentos",
+              "outgoingEdgeId": "e-ing-bolsas"
+            },
+            {
+              "id": "ing-i5",
+              "content": "🔄 Transferência Externa",
+              "outgoingEdgeId": "e-ing-transf"
+            },
+            {
+              "id": "ing-i6",
+              "content": "🏫 Aproveitamento do ENEM",
+              "outgoingEdgeId": "e-ing-enem"
+            },
+            {
+              "id": "ing-i7",
+              "content": "↩️ Menu Principal",
+              "outgoingEdgeId": "e-ing-back"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-ing-vest",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": -900
+      },
+      "title": "Vestibular",
+      "blocks": [
+        {
+          "id": "blk-ing-vest-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-ing-vest-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "✏️ Vestibular USCS"
+                  }
+                ],
+                "id": "vest1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "A USCS realiza vestibulares próprios ao longo do ano e também aceita a nota do ENEM. São mais de 60 cursos de graduação disponíveis nas modalidades presencial e EAD."
+                  }
+                ],
+                "id": "vest2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Inscrições pelo portal oficial"
+                  }
+                ],
+                "id": "vest3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Fique atento aos prazos e datas das provas"
+                  }
+                ],
+                "id": "vest4"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Resultados divulgados no site"
+                  }
+                ],
+                "id": "vest5"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Acesse: https://uscs.edu.br/vestibular"
+                  }
+                ],
+                "id": "vest6"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-ing-vest-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-ing-vest-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "✏️ Vestibular USCS A USCS realiza vestibulares próprios ao longo do ano e também aceita a nota do ENEM. São mais de 60 cursos de graduação disponíveis nas modalidades presencial e EAD. • Inscrições pelo portal oficial • Fique atento aos prazos e datas das provas • Resultados divulgados no site",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-ing-vest-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-ing-vest-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-ing-vest-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "vest-n1",
+              "content": "↩️ Voltar para Ingressar na USCS",
+              "outgoingEdgeId": "e-vest-voltar"
+            },
+            {
+              "id": "vest-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-vest-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-ing-mat",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": -700
+      },
+      "title": "Matrículas",
+      "blocks": [
+        {
+          "id": "blk-ing-mat-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-ing-mat-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "📝 Matrículas na USCS"
+                  }
+                ],
+                "id": "mat1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "Para realizar sua matrícula:"
+                  }
+                ],
+                "id": "mat2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Acesse o portal Mentor Web para efetuar sua matrícula online"
+                  }
+                ],
+                "id": "mat3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Verifique os prazos no Calendário Acadêmico"
+                  }
+                ],
+                "id": "mat4"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Documentos necessários: RG, CPF, Histórico Escolar e Comprovante de Residência"
+                  }
+                ],
+                "id": "mat5"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Mentor Web: https://uscs.mentorweb.ws/uscsSecurityG5/?pcaes=a205de9c60d3992e6296830743168a74"
+                  }
+                ],
+                "id": "mat6"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Site: https://uscs.edu.br/vestibular"
+                  }
+                ],
+                "id": "mat7"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-ing-mat-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-ing-mat-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "📝 Matrículas na USCS Para realizar sua matrícula: • Acesse o portal Mentor Web para efetuar sua matrícula online • Verifique os prazos no Calendário Acadêmico • Documentos necessários: RG, CPF, Histórico Escolar e Comprovante de Residência",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-ing-mat-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-ing-mat-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-ing-mat-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "mat-n1",
+              "content": "↩️ Voltar para Ingressar na USCS",
+              "outgoingEdgeId": "e-mat-voltar"
+            },
+            {
+              "id": "mat-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-mat-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-ing-mens",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": -500
+      },
+      "title": "Mensalidades",
+      "blocks": [
+        {
+          "id": "blk-ing-mens-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-ing-mens-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "💵 Mensalidades USCS"
+                  }
+                ],
+                "id": "men1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "Os valores de mensalidade variam conforme o curso e o semestre. Consulte os valores atualizados no portal oficial da USCS."
+                  }
+                ],
+                "id": "men2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "A USCS é uma universidade municipal e oferece condições especiais para moradores de São Caetano do Sul."
+                  }
+                ],
+                "id": "men3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Acesse: https://uscs.edu.br/cursos-de-graduacao"
+                  }
+                ],
+                "id": "men4"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-ing-mens-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-ing-mens-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "💵 Mensalidades USCS Os valores de mensalidade variam conforme o curso e o semestre. Consulte os valores atualizados no portal oficial da USCS. A USCS é uma universidade municipal e oferece condições especiais para moradores de São Caetano do Sul.",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-ing-mens-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-ing-mens-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-ing-mens-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "men-n1",
+              "content": "↩️ Voltar para Ingressar na USCS",
+              "outgoingEdgeId": "e-mens-voltar"
+            },
+            {
+              "id": "men-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-mens-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-ing-bolsas",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": -300
+      },
+      "title": "Bolsas e Financiamentos",
+      "blocks": [
+        {
+          "id": "blk-ing-bolsas-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-ing-bolsas-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🎁 Bolsas e Financiamentos na USCS"
+                  }
+                ],
+                "id": "bol1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• ProUni (Programa Universidade para Todos)"
+                  }
+                ],
+                "id": "bol2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• FIES (Financiamento Estudantil)"
+                  }
+                ],
+                "id": "bol3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Bolsas Institucionais USCS"
+                  }
+                ],
+                "id": "bol4"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Desconto para Servidores Municipais"
+                  }
+                ],
+                "id": "bol5"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Convênios Empresariais"
+                  }
+                ],
+                "id": "bol6"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Acesse: https://uscs.edu.br/bolsas"
+                  }
+                ],
+                "id": "bol7"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-ing-bolsas-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-ing-bolsas-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "🎁 Bolsas e Financiamentos na USCS • ProUni (Programa Universidade para Todos) • FIES (Financiamento Estudantil) • Bolsas Institucionais USCS • Desconto para Servidores Municipais • Convênios Empresariais",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-ing-bolsas-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-ing-bolsas-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-ing-bolsas-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "bol-n1",
+              "content": "↩️ Voltar para Ingressar na USCS",
+              "outgoingEdgeId": "e-bolsas-voltar"
+            },
+            {
+              "id": "bol-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-bolsas-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-ing-transf",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": -100
+      },
+      "title": "Transferência Externa",
+      "blocks": [
+        {
+          "id": "blk-ing-transf-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-ing-transf-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔄 Transferência Externa para a USCS"
+                  }
+                ],
+                "id": "transf1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "Se você já cursa graduação em outra instituição, pode solicitar transferência para a USCS."
+                  }
+                ],
+                "id": "transf2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Verifique os prazos de inscrição para transferência no portal"
+                  }
+                ],
+                "id": "transf3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Consulte a disponibilidade de vagas para o seu curso"
+                  }
+                ],
+                "id": "transf4"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Acesse: https://uscs.edu.br/vestibular"
+                  }
+                ],
+                "id": "transf5"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-ing-transf-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-ing-transf-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "🔄 Transferência Externa para a USCS Se você já cursa graduação em outra instituição, pode solicitar transferência para a USCS. • Verifique os prazos de inscrição para transferência no portal • Consulte a disponibilidade de vagas para o seu curso",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-ing-transf-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-ing-transf-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-ing-transf-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "transf-n1",
+              "content": "↩️ Voltar para Ingressar na USCS",
+              "outgoingEdgeId": "e-transf-voltar"
+            },
+            {
+              "id": "transf-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-transf-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-ing-enem",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": 100
+      },
+      "title": "Aproveitamento do ENEM",
+      "blocks": [
+        {
+          "id": "blk-ing-enem-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-ing-enem-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🏫 Aproveitamento da Nota do ENEM"
+                  }
+                ],
+                "id": "enem1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "A USCS aceita a nota do ENEM como forma de ingresso! Você pode usar sua nota para concorrer a uma vaga nos cursos de graduação."
+                  }
+                ],
+                "id": "enem2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Consulte os cursos disponíveis e os critérios de aproveitamento no portal"
+                  }
+                ],
+                "id": "enem3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Acesse: https://uscs.edu.br/vestibular"
+                  }
+                ],
+                "id": "enem4"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-ing-enem-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-ing-enem-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "🏫 Aproveitamento da Nota do ENEM A USCS aceita a nota do ENEM como forma de ingresso! Você pode usar sua nota para concorrer a uma vaga nos cursos de graduação. • Consulte os cursos disponíveis e os critérios de aproveitamento no portal",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-ing-enem-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-ing-enem-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-ing-enem-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "enem-n1",
+              "content": "↩️ Voltar para Ingressar na USCS",
+              "outgoingEdgeId": "e-enem-voltar"
+            },
+            {
+              "id": "enem-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-enem-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-conhecer",
+      "graphCoordinates": {
+        "x": 700,
+        "y": 300
+      },
+      "title": "Conhecer a USCS",
+      "blocks": [
+        {
+          "id": "blk-conhecer-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-conhecer-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "Ótimo! Vamos te apresentar a USCS! 🏛️ Escolha o que deseja conhecer:"
+                  }
+                ],
+                "id": "con1"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-conhecer-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-conhecer-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "Ótimo! Vamos te apresentar a USCS! 🏛️ Escolha o que deseja conhecer:",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-conhecer-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-conhecer-menu",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-conhecer-menu",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "con-i1",
+              "content": "📍 Endereço dos Campus",
+              "outgoingEdgeId": "e-con-campus"
+            },
+            {
+              "id": "con-i2",
+              "content": "🏗️ Estrutura da Universidade",
+              "outgoingEdgeId": "e-con-estrutura"
+            },
+            {
+              "id": "con-i3",
+              "content": "📋 Cursos de Graduação",
+              "outgoingEdgeId": "e-con-cursos"
+            },
+            {
+              "id": "con-i4",
+              "content": "📚 Pós-Graduação",
+              "outgoingEdgeId": "e-con-posgrad"
+            },
+            {
+              "id": "con-i5",
+              "content": "📖 Biblioteca",
+              "outgoingEdgeId": "e-con-bib"
+            },
+            {
+              "id": "con-i6",
+              "content": "📞 Contato",
+              "outgoingEdgeId": "e-con-contato"
+            },
+            {
+              "id": "con-i7",
+              "content": "↩️ Menu Principal",
+              "outgoingEdgeId": "e-con-back"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-con-campus",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": 200
+      },
+      "title": "Endereço dos Campus",
+      "blocks": [
+        {
+          "id": "blk-con-campus-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-con-campus-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "📍 Campus da USCS"
+                  }
+                ],
+                "id": "camp1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔹 Campus Barcelona: Av. Goiás, 3.400 – Barcelona, São Caetano do Sul – SP"
+                  }
+                ],
+                "id": "camp2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔹 Campus Centro: Rua Santo Antônio, 50 – Centro, São Caetano do Sul – SP"
+                  }
+                ],
+                "id": "camp3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔹 Campus Conceição: Rua Conceição, 321 – Santo Antônio, São Caetano do Sul – SP"
+                  }
+                ],
+                "id": "camp4"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔹 Campus Manoel Coelho: Rua Manoel Coelho, 600 (6º andar) – Centro, São Caetano do Sul – SP"
+                  }
+                ],
+                "id": "camp5"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔹 Campus São Paulo: Rua Treze de Maio, 681 – Bela Vista, São Paulo – SP"
+                  }
+                ],
+                "id": "camp6"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔹 Campus Itapetininga: Av. Dr. Ciro Albuquerque, 4.750 – Taboãozinho, Itapetininga – SP"
+                  }
+                ],
+                "id": "camp7"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "📞 Telefone geral: (11) 4239-3200"
+                  }
+                ],
+                "id": "camp8"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Acesse: https://uscs.edu.br/quem-somos"
+                  }
+                ],
+                "id": "camp9"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-con-campus-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-con-campus-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "📍 Campus da USCS 🔹 Campus Barcelona: Av. Goiás, 3.400 – Barcelona, São Caetano do Sul – SP 🔹 Campus Centro: Rua Santo Antônio, 50 – Centro, São Caetano do Sul – SP 🔹 Campus Conceição: Rua Conceição, 321 – Santo Antônio, São Caetano do Sul – SP 🔹 Campus Manoel Coelho: Rua Manoel Coelho, 600 (6º andar) – Centro, São Caetano do Sul – SP 🔹 Campus São Paulo: Rua Treze de Maio, 681 – Bela Vista, São Paulo – SP 🔹 Campus Itapetininga: Av. Dr. Ciro Albuquerque, 4.750 – Taboãozinho, Itapetininga – SP 📞 Telefone geral: (11) 4239-3200",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-con-campus-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-con-campus-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-con-campus-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "camp-n1",
+              "content": "↩️ Voltar para Conhecer a USCS",
+              "outgoingEdgeId": "e-campus-voltar"
+            },
+            {
+              "id": "camp-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-campus-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-con-estrutura",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": 400
+      },
+      "title": "Estrutura da Universidade",
+      "blocks": [
+        {
+          "id": "blk-con-estrutura-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-con-estrutura-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🏗️ Estrutura da USCS"
+                  }
+                ],
+                "id": "est1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "A USCS possui uma infraestrutura moderna distribuída em 6 campus, com:"
+                  }
+                ],
+                "id": "est2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Laboratórios equipados para diversas áreas"
+                  }
+                ],
+                "id": "est3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Bibliotecas com acervo físico e digital"
+                  }
+                ],
+                "id": "est4"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Clínicas-escola e Farmácia-Escola"
+                  }
+                ],
+                "id": "est5"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Espaços de convivência e esportes"
+                  }
+                ],
+                "id": "est6"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Wi-Fi em todos os campus"
+                  }
+                ],
+                "id": "est7"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Restaurante Universitário"
+                  }
+                ],
+                "id": "est8"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Agende uma visita: https://uscs.edu.br/quem-somos"
+                  }
+                ],
+                "id": "est9"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-con-estrutura-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-con-estrutura-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "🏗️ Estrutura da USCS A USCS possui uma infraestrutura moderna distribuída em 6 campus, com: • Laboratórios equipados para diversas áreas • Bibliotecas com acervo físico e digital • Clínicas-escola e Farmácia-Escola • Espaços de convivência e esportes • Wi-Fi em todos os campus • Restaurante Universitário",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-con-estrutura-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-con-estrutura-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-con-estrutura-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "est-n1",
+              "content": "↩️ Voltar para Conhecer a USCS",
+              "outgoingEdgeId": "e-estrutura-voltar"
+            },
+            {
+              "id": "est-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-estrutura-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-con-cursos",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": 600
+      },
+      "title": "Cursos de Graduação",
+      "blocks": [
+        {
+          "id": "blk-con-cursos-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-con-cursos-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "📋 Cursos de Graduação da USCS"
+                  }
+                ],
+                "id": "cur1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "A USCS oferece mais de 60 cursos de graduação nas modalidades presencial e EAD, nas áreas de:"
+                  }
+                ],
+                "id": "cur2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🏥 Ciências da Saúde | 💻 Tecnologia e Exatas | 📊 Ciências Sociais Aplicadas | 🎨 Comunicação e Artes | ⚖️ Direito | 🎓 Educação"
+                  }
+                ],
+                "id": "cur3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Confira todos os cursos: https://uscs.edu.br/cursos-de-graduacao"
+                  }
+                ],
+                "id": "cur4"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-con-cursos-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-con-cursos-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "📋 Cursos de Graduação da USCS A USCS oferece mais de 60 cursos de graduação nas modalidades presencial e EAD, nas áreas de: 🏥 Ciências da Saúde | 💻 Tecnologia e Exatas | 📊 Ciências Sociais Aplicadas | 🎨 Comunicação e Artes | ⚖️ Direito | 🎓 Educação",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-con-cursos-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-con-cursos-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-con-cursos-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "cur-n1",
+              "content": "↩️ Voltar para Conhecer a USCS",
+              "outgoingEdgeId": "e-cursos-voltar"
+            },
+            {
+              "id": "cur-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-cursos-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-con-posgrad",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": 800
+      },
+      "title": "Pós-Graduação",
+      "blocks": [
+        {
+          "id": "blk-con-posgrad-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-con-posgrad-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "📚 Pós-Graduação na USCS"
+                  }
+                ],
+                "id": "pg1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "A USCS possui programas de Pós-Graduação stricto e lato sensu reconhecidos pela CAPES:"
+                  }
+                ],
+                "id": "pg2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Especialização (Lato Sensu)"
+                  }
+                ],
+                "id": "pg3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• MBA"
+                  }
+                ],
+                "id": "pg4"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Mestrado"
+                  }
+                ],
+                "id": "pg5"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Doutorado"
+                  }
+                ],
+                "id": "pg6"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Acesse: https://uscs.edu.br/pos-graduacao"
+                  }
+                ],
+                "id": "pg7"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-con-posgrad-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-con-posgrad-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "📚 Pós-Graduação na USCS A USCS possui programas de Pós-Graduação stricto e lato sensu reconhecidos pela CAPES: • Especialização (Lato Sensu) • MBA • Mestrado • Doutorado",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-con-posgrad-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-con-posgrad-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-con-posgrad-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "pg-n1",
+              "content": "↩️ Voltar para Conhecer a USCS",
+              "outgoingEdgeId": "e-posgrad-voltar"
+            },
+            {
+              "id": "pg-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-posgrad-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-con-bib",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": 1000
+      },
+      "title": "Biblioteca",
+      "blocks": [
+        {
+          "id": "blk-con-bib-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-con-bib-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "📖 Sistema de Bibliotecas USCS"
+                  }
+                ],
+                "id": "bib1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "A USCS possui bibliotecas em todos os campus, com:"
+                  }
+                ],
+                "id": "bib2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Acervo físico e digital"
+                  }
+                ],
+                "id": "bib3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Empréstimo e renovação online"
+                  }
+                ],
+                "id": "bib4"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Espaços de estudo individual e em grupo"
+                  }
+                ],
+                "id": "bib5"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Acesso a bases de dados científicas"
+                  }
+                ],
+                "id": "bib6"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "⏰ Funcionamento: Seg a Sex, 8h às 22h (Campus SCS) | 8h às 19h (Campus SP)"
+                  }
+                ],
+                "id": "bib7"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Acesse: https://uscs.edu.br/biblioteca"
+                  }
+                ],
+                "id": "bib8"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-con-bib-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-con-bib-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "📖 Sistema de Bibliotecas USCS A USCS possui bibliotecas em todos os campus, com: • Acervo físico e digital • Empréstimo e renovação online • Espaços de estudo individual e em grupo • Acesso a bases de dados científicas ⏰ Funcionamento: Seg a Sex, 8h às 22h (Campus SCS) | 8h às 19h (Campus SP)",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-con-bib-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-con-bib-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-con-bib-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "bib-n1",
+              "content": "↩️ Voltar para Conhecer a USCS",
+              "outgoingEdgeId": "e-bib-voltar"
+            },
+            {
+              "id": "bib-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-bib-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-con-contato",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": 1200
+      },
+      "title": "Contato",
+      "blocks": [
+        {
+          "id": "blk-con-contato-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-con-contato-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "📞 Entre em contato com a USCS:"
+                  }
+                ],
+                "id": "ct1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Telefone: (11) 4239-3200"
+                  }
+                ],
+                "id": "ct2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• E-mail: atendimento@uscs.edu.br"
+                  }
+                ],
+                "id": "ct3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Site: https://uscs.edu.br"
+                  }
+                ],
+                "id": "ct4"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Horário de atendimento: Seg a Sex, 8h às 22h | Sáb, 8h às 14h"
+                  }
+                ],
+                "id": "ct5"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "📱 Redes Sociais: @uscsoficial (Instagram, Facebook, YouTube, LinkedIn)"
+                  }
+                ],
+                "id": "ct6"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-con-contato-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-con-contato-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "📞 Entre em contato com a USCS: • Telefone: (11) 4239-3200 • E-mail: atendimento@uscs.edu.br • Site: https://uscs.edu.br • Horário de atendimento: Seg a Sex, 8h às 22h | Sáb, 8h às 14h 📱 Redes Sociais: @uscsoficial (Instagram, Facebook, YouTube, LinkedIn)",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-con-contato-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-con-contato-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-con-contato-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "ct-n1",
+              "content": "↩️ Voltar para Conhecer a USCS",
+              "outgoingEdgeId": "e-contato-voltar"
+            },
+            {
+              "id": "ct-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-contato-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-aluno",
+      "graphCoordinates": {
+        "x": 700,
+        "y": 1500
+      },
+      "title": "Já sou aluno da USCS",
+      "blocks": [
+        {
+          "id": "blk-aluno-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-aluno-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "Olá, aluno(a) da USCS! 📚 Como posso te ajudar?"
+                  }
+                ],
+                "id": "alu1"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-aluno-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-aluno-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "Olá, aluno(a) da USCS! 📚 Como posso te ajudar?",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-aluno-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-aluno-menu",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-aluno-menu",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "alu-i1",
+              "content": "💻 Materiais e Plataforma EAD",
+              "outgoingEdgeId": "e-alu-ead"
+            },
+            {
+              "id": "alu-i2",
+              "content": "💼 Estágios e Programas",
+              "outgoingEdgeId": "e-alu-estagios"
+            },
+            {
+              "id": "alu-i3",
+              "content": "📜 ACC (Atividades Complementares)",
+              "outgoingEdgeId": "e-alu-acc"
+            },
+            {
+              "id": "alu-i4",
+              "content": "🔑 Acesso com MagiKey",
+              "outgoingEdgeId": "e-alu-magikey"
+            },
+            {
+              "id": "alu-i5",
+              "content": "📝 Sistema de Provas",
+              "outgoingEdgeId": "e-alu-provas"
+            },
+            {
+              "id": "alu-i6",
+              "content": "📅 Calendário Acadêmico",
+              "outgoingEdgeId": "e-alu-calendario"
+            },
+            {
+              "id": "alu-i7",
+              "content": "📗 Google Classroom",
+              "outgoingEdgeId": "e-alu-classroom"
+            },
+            {
+              "id": "alu-i8",
+              "content": "💰 Financeiro (Boletos, Mensalidades)",
+              "outgoingEdgeId": "e-alu-financeiro"
+            },
+            {
+              "id": "alu-i9",
+              "content": "📄 Secretaria Acadêmica",
+              "outgoingEdgeId": "e-alu-secretaria"
+            },
+            {
+              "id": "alu-i10",
+              "content": "↩️ Menu Principal",
+              "outgoingEdgeId": "e-alu-back"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-alu-ead",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": 1300
+      },
+      "title": "Materiais e Plataforma EAD",
+      "blocks": [
+        {
+          "id": "blk-alu-ead-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-alu-ead-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "💻 Materiais e Plataforma EAD"
+                  }
+                ],
+                "id": "ead1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "Para acessar seus materiais didáticos, aulas online e atividades da plataforma EAD, utilize o Mentor Web:"
+                  }
+                ],
+                "id": "ead2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Mentor Web: https://uscs.mentorweb.ws/uscsSecurityG5/?pcaes=a205de9c60d3992e6296830743168a74"
+                  }
+                ],
+                "id": "ead3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "Caso tenha dificuldades com login ou senha, entre em contato com o suporte de TI da USCS pelo telefone (11) 4239-3200."
+                  }
+                ],
+                "id": "ead4"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-alu-ead-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-alu-ead-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "💻 Materiais e Plataforma EAD Para acessar seus materiais didáticos, aulas online e atividades da plataforma EAD, utilize o Mentor Web: Caso tenha dificuldades com login ou senha, entre em contato com o suporte de TI da USCS pelo telefone (11) 4239-3200.",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-alu-ead-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-alu-ead-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-alu-ead-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "ead-n1",
+              "content": "↩️ Voltar para Área do Aluno",
+              "outgoingEdgeId": "e-ead-voltar"
+            },
+            {
+              "id": "ead-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-ead-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-alu-estagios",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": 1500
+      },
+      "title": "Estágios e Programas",
+      "blocks": [
+        {
+          "id": "blk-alu-estagios-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-alu-estagios-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "💼 Estágios e Programas"
+                  }
+                ],
+                "id": "stg1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "A USCS oferece amplo campo de estágio em todas as áreas de conhecimento, com parcerias diretas com CIEE e NUBE."
+                  }
+                ],
+                "id": "stg2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Vagas de estágio e emprego atualizadas constantemente"
+                  }
+                ],
+                "id": "stg3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Orientação para currículo e entrevistas"
+                  }
+                ],
+                "id": "stg4"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Parcerias com empresas da região"
+                  }
+                ],
+                "id": "stg5"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "Para informações sobre seu estágio e documentação, acesse o Mentor Web:"
+                  }
+                ],
+                "id": "stg6"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Mentor Web: https://uscs.mentorweb.ws/uscsSecurityG5/?pcaes=a205de9c60d3992e6296830743168a74"
+                  }
+                ],
+                "id": "stg7"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-alu-estagios-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-alu-estagios-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "💼 Estágios e Programas A USCS oferece amplo campo de estágio em todas as áreas de conhecimento, com parcerias diretas com CIEE e NUBE. • Vagas de estágio e emprego atualizadas constantemente • Orientação para currículo e entrevistas • Parcerias com empresas da região Para informações sobre seu estágio e documentação, acesse o Mentor Web:",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-alu-estagios-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-alu-estagios-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-alu-estagios-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "stg-n1",
+              "content": "↩️ Voltar para Área do Aluno",
+              "outgoingEdgeId": "e-estagios-voltar"
+            },
+            {
+              "id": "stg-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-estagios-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-alu-acc",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": 1700
+      },
+      "title": "ACC - Atividades Complementares",
+      "blocks": [
+        {
+          "id": "blk-alu-acc-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-alu-acc-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "📜 ACC – Atividades Complementares de Curso"
+                  }
+                ],
+                "id": "acc1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "As Atividades Complementares são obrigatórias para a conclusão do curso. Inclui participação em eventos, cursos, palestras, projetos de extensão, entre outros."
+                  }
+                ],
+                "id": "acc2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "Para enviar seus certificados e acompanhar suas horas de ACC, acesse o Mentor Web:"
+                  }
+                ],
+                "id": "acc3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Mentor Web: https://uscs.mentorweb.ws/uscsSecurityG5/?pcaes=a205de9c60d3992e6296830743168a74"
+                  }
+                ],
+                "id": "acc4"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-alu-acc-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-alu-acc-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "📜 ACC – Atividades Complementares de Curso As Atividades Complementares são obrigatórias para a conclusão do curso. Inclui participação em eventos, cursos, palestras, projetos de extensão, entre outros. Para enviar seus certificados e acompanhar suas horas de ACC, acesse o Mentor Web:",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-alu-acc-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-alu-acc-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-alu-acc-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "acc-n1",
+              "content": "↩️ Voltar para Área do Aluno",
+              "outgoingEdgeId": "e-acc-voltar"
+            },
+            {
+              "id": "acc-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-acc-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-alu-magikey",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": 1900
+      },
+      "title": "Acesso com MagiKey",
+      "blocks": [
+        {
+          "id": "blk-alu-magikey-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-alu-magikey-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔑 Acesso com MagiKey"
+                  }
+                ],
+                "id": "mk1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "O MagiKey é o sistema de controle de acesso utilizado nos campus da USCS. Com ele, é feito o registro de presença dos alunos."
+                  }
+                ],
+                "id": "mk2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Certifique-se de que seu cadastro biométrico está atualizado"
+                  }
+                ],
+                "id": "mk3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Em caso de problemas com a catraca ou reconhecimento, procure a recepção do campus"
+                  }
+                ],
+                "id": "mk4"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "Para mais informações, entre em contato com a TI da USCS: (11) 4239-3200"
+                  }
+                ],
+                "id": "mk5"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-alu-magikey-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-alu-magikey-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "🔑 Acesso com MagiKey O MagiKey é o sistema de controle de acesso utilizado nos campus da USCS. Com ele, é feito o registro de presença dos alunos. • Certifique-se de que seu cadastro biométrico está atualizado • Em caso de problemas com a catraca ou reconhecimento, procure a recepção do campus Para mais informações, entre em contato com a TI da USCS: (11) 4239-3200",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-alu-magikey-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-alu-magikey-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-alu-magikey-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "mk-n1",
+              "content": "↩️ Voltar para Área do Aluno",
+              "outgoingEdgeId": "e-magikey-voltar"
+            },
+            {
+              "id": "mk-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-magikey-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-alu-provas",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": 2100
+      },
+      "title": "Sistema de Provas",
+      "blocks": [
+        {
+          "id": "blk-alu-provas-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-alu-provas-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "📝 Sistema de Provas"
+                  }
+                ],
+                "id": "prv1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "As datas de provas e avaliações estão disponíveis no Calendário Acadêmico e no ambiente do aluno."
+                  }
+                ],
+                "id": "prv2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Consulte as datas de provas no Calendário Acadêmico"
+                  }
+                ],
+                "id": "prv3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Acesse suas notas e frequência pelo Mentor Web"
+                  }
+                ],
+                "id": "prv4"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Solicitações de revisão de prova devem ser feitas pela Secretaria Acadêmica"
+                  }
+                ],
+                "id": "prv5"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Mentor Web: https://uscs.mentorweb.ws/uscsSecurityG5/?pcaes=a205de9c60d3992e6296830743168a74"
+                  }
+                ],
+                "id": "prv6"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-alu-provas-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-alu-provas-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "📝 Sistema de Provas As datas de provas e avaliações estão disponíveis no Calendário Acadêmico e no ambiente do aluno. • Consulte as datas de provas no Calendário Acadêmico • Acesse suas notas e frequência pelo Mentor Web • Solicitações de revisão de prova devem ser feitas pela Secretaria Acadêmica",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-alu-provas-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-alu-provas-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-alu-provas-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "prv-n1",
+              "content": "↩️ Voltar para Área do Aluno",
+              "outgoingEdgeId": "e-provas-voltar"
+            },
+            {
+              "id": "prv-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-provas-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-alu-calendario",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": 2300
+      },
+      "title": "Calendário Acadêmico",
+      "blocks": [
+        {
+          "id": "blk-alu-calendario-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-alu-calendario-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "📅 Calendário Acadêmico USCS"
+                  }
+                ],
+                "id": "cal1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "O Calendário Acadêmico contém todas as datas importantes do semestre:"
+                  }
+                ],
+                "id": "cal2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Início e fim das aulas"
+                  }
+                ],
+                "id": "cal3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Período de provas (NP1, NP2 e Exame)"
+                  }
+                ],
+                "id": "cal4"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Feriados e recessos"
+                  }
+                ],
+                "id": "cal5"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Prazos de matrícula e rematrícula"
+                  }
+                ],
+                "id": "cal6"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Acesse: https://uscs.edu.br/calendario-academico"
+                  }
+                ],
+                "id": "cal7"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-alu-calendario-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-alu-calendario-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "📅 Calendário Acadêmico USCS O Calendário Acadêmico contém todas as datas importantes do semestre: • Início e fim das aulas • Período de provas (NP1, NP2 e Exame) • Feriados e recessos • Prazos de matrícula e rematrícula",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-alu-calendario-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-alu-calendario-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-alu-calendario-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "cal-n1",
+              "content": "↩️ Voltar para Área do Aluno",
+              "outgoingEdgeId": "e-calendario-voltar"
+            },
+            {
+              "id": "cal-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-calendario-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-alu-classroom",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": 2500
+      },
+      "title": "Google Classroom",
+      "blocks": [
+        {
+          "id": "blk-alu-classroom-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-alu-classroom-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "📗 Google Classroom"
+                  }
+                ],
+                "id": "gcl1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "A USCS utiliza o Google Classroom como parte do pacote Google for Education. Por ele você pode:"
+                  }
+                ],
+                "id": "gcl2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Acessar materiais de aula postados pelos professores"
+                  }
+                ],
+                "id": "gcl3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Entregar atividades e trabalhos"
+                  }
+                ],
+                "id": "gcl4"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Utilizar o e-mail institucional @online.uscs.edu.br"
+                  }
+                ],
+                "id": "gcl5"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "Use seu e-mail institucional para fazer login no Google Classroom. Caso não tenha acesso, entre em contato com o suporte de TI: (11) 4239-3200."
+                  }
+                ],
+                "id": "gcl6"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Google Classroom: https://classroom.google.com"
+                  }
+                ],
+                "id": "gcl7"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-alu-classroom-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-alu-classroom-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "📗 Google Classroom A USCS utiliza o Google Classroom como parte do pacote Google for Education. Por ele você pode: • Acessar materiais de aula postados pelos professores • Entregar atividades e trabalhos • Utilizar o e-mail institucional @online.uscs.edu.br Use seu e-mail institucional para fazer login no Google Classroom. Caso não tenha acesso, entre em contato com o suporte de TI: (11) 4239-3200.",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-alu-classroom-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-alu-classroom-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-alu-classroom-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "gcl-n1",
+              "content": "↩️ Voltar para Área do Aluno",
+              "outgoingEdgeId": "e-classroom-voltar"
+            },
+            {
+              "id": "gcl-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-classroom-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-alu-financeiro",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": 2700
+      },
+      "title": "Financeiro do Aluno",
+      "blocks": [
+        {
+          "id": "blk-alu-financeiro-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-alu-financeiro-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "💰 Financeiro"
+                  }
+                ],
+                "id": "fin1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "Para assuntos financeiros como boletos, mensalidades e negociação de débitos, acesse o Mentor Web:"
+                  }
+                ],
+                "id": "fin2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• 2ª via de boleto"
+                  }
+                ],
+                "id": "fin3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Consulta de mensalidades"
+                  }
+                ],
+                "id": "fin4"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Negociação de débitos"
+                  }
+                ],
+                "id": "fin5"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Mentor Web: https://uscs.mentorweb.ws/uscsSecurityG5/?pcaes=a205de9c60d3992e6296830743168a74"
+                  }
+                ],
+                "id": "fin6"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-alu-financeiro-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-alu-financeiro-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "💰 Financeiro Para assuntos financeiros como boletos, mensalidades e negociação de débitos, acesse o Mentor Web: • 2ª via de boleto • Consulta de mensalidades • Negociação de débitos",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-alu-financeiro-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-alu-financeiro-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-alu-financeiro-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "fin-n1",
+              "content": "↩️ Voltar para Área do Aluno",
+              "outgoingEdgeId": "e-financeiro-voltar"
+            },
+            {
+              "id": "fin-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-financeiro-menu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grp-alu-secretaria",
+      "graphCoordinates": {
+        "x": 1200,
+        "y": 2900
+      },
+      "title": "Secretaria Acadêmica",
+      "blocks": [
+        {
+          "id": "blk-alu-secretaria-txt",
+          "type": "text",
+          "outgoingEdgeId": "e-blk-alu-secretaria-txt-to-el",
+          "content": {
+            "richText": [
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "📄 Secretaria Acadêmica"
+                  }
+                ],
+                "id": "sec1"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "Pela Secretaria Acadêmica você pode solicitar:"
+                  }
+                ],
+                "id": "sec2"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Histórico Escolar"
+                  }
+                ],
+                "id": "sec3"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Declaração de Matrícula"
+                  }
+                ],
+                "id": "sec4"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Diploma"
+                  }
+                ],
+                "id": "sec5"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "• Trancamento de Matrícula"
+                  }
+                ],
+                "id": "sec6"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "Documentos e solicitações podem ser feitos pelo Mentor Web:"
+                  }
+                ],
+                "id": "sec7"
+              },
+              {
+                "type": "p",
+                "children": [
+                  {
+                    "text": "🔗 Mentor Web: https://uscs.mentorweb.ws/uscsSecurityG5/?pcaes=a205de9c60d3992e6296830743168a74"
+                  }
+                ],
+                "id": "sec8"
+              }
+            ]
+          }
+        },
+        {
+          "id": "blk-el-alu-secretaria-txt",
+          "type": "elevenlabs",
+          "outgoingEdgeId": "e-blk-el-alu-secretaria-txt-to-aud",
+          "options": {
+            "action": "Convert text to speech",
+            "text": "📄 Secretaria Acadêmica Pela Secretaria Acadêmica você pode solicitar: • Histórico Escolar • Declaração de Matrícula • Diploma • Trancamento de Matrícula Documentos e solicitações podem ser feitos pelo Mentor Web:",
+            "modelId": "eleven_multilingual_v2",
+            "saveUrlInVariableId": "var-audioUrl",
+            "voiceId": "YOUR_VOICE_ID",
+            "credentialsId": "YOUR_CREDENTIAL_ID"
+          }
+        },
+        {
+          "id": "blk-aud-alu-secretaria-txt",
+          "type": "audio",
+          "outgoingEdgeId": "e-alu-secretaria-nav",
+          "content": {
+            "url": "{{audioUrl}}",
+            "isAutoplayEnabled": true,
+            "isPlayerVisible": false,
+            "hidePlayer": true
+          }
+        },
+        {
+          "id": "blk-alu-secretaria-nav",
+          "type": "choice input",
+          "items": [
+            {
+              "id": "sec-n1",
+              "content": "↩️ Voltar para Área do Aluno",
+              "outgoingEdgeId": "e-secretaria-voltar"
+            },
+            {
+              "id": "sec-n2",
+              "content": "🏠 Menu Principal",
+              "outgoingEdgeId": "e-secretaria-menu"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-start",
+      "from": {
+        "eventId": "evt-start"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-welcome-img-txt",
+      "from": {
+        "blockId": "blk-welcome-img"
+      },
+      "to": {
+        "groupId": "grp-welcome",
+        "blockId": "blk-welcome-txt"
+      }
+    },
+    {
+      "id": "e-welcome-menu",
+      "from": {
+        "blockId": "blk-aud-welcome-txt"
+      },
+      "to": {
+        "groupId": "grp-welcome",
+        "blockId": "blk-welcome-menu"
+      }
+    },
+    {
+      "id": "e-m-ingressar",
+      "from": {
+        "blockId": "blk-welcome-menu",
+        "itemId": "m1"
+      },
+      "to": {
+        "groupId": "grp-ingressar"
+      }
+    },
+    {
+      "id": "e-m-conhecer",
+      "from": {
+        "blockId": "blk-welcome-menu",
+        "itemId": "m2"
+      },
+      "to": {
+        "groupId": "grp-conhecer"
+      }
+    },
+    {
+      "id": "e-m-aluno",
+      "from": {
+        "blockId": "blk-welcome-menu",
+        "itemId": "m3"
+      },
+      "to": {
+        "groupId": "grp-aluno"
+      }
+    },
+    {
+      "id": "e-ingressar-menu",
+      "from": {
+        "blockId": "blk-aud-ingressar-txt"
+      },
+      "to": {
+        "groupId": "grp-ingressar",
+        "blockId": "blk-ingressar-menu"
+      }
+    },
+    {
+      "id": "e-ing-vest",
+      "from": {
+        "blockId": "blk-ingressar-menu",
+        "itemId": "ing-i1"
+      },
+      "to": {
+        "groupId": "grp-ing-vest"
+      }
+    },
+    {
+      "id": "e-ing-mat",
+      "from": {
+        "blockId": "blk-ingressar-menu",
+        "itemId": "ing-i2"
+      },
+      "to": {
+        "groupId": "grp-ing-mat"
+      }
+    },
+    {
+      "id": "e-ing-mens",
+      "from": {
+        "blockId": "blk-ingressar-menu",
+        "itemId": "ing-i3"
+      },
+      "to": {
+        "groupId": "grp-ing-mens"
+      }
+    },
+    {
+      "id": "e-ing-bolsas",
+      "from": {
+        "blockId": "blk-ingressar-menu",
+        "itemId": "ing-i4"
+      },
+      "to": {
+        "groupId": "grp-ing-bolsas"
+      }
+    },
+    {
+      "id": "e-ing-transf",
+      "from": {
+        "blockId": "blk-ingressar-menu",
+        "itemId": "ing-i5"
+      },
+      "to": {
+        "groupId": "grp-ing-transf"
+      }
+    },
+    {
+      "id": "e-ing-enem",
+      "from": {
+        "blockId": "blk-ingressar-menu",
+        "itemId": "ing-i6"
+      },
+      "to": {
+        "groupId": "grp-ing-enem"
+      }
+    },
+    {
+      "id": "e-ing-back",
+      "from": {
+        "blockId": "blk-ingressar-menu",
+        "itemId": "ing-i7"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-ing-vest-nav",
+      "from": {
+        "blockId": "blk-aud-ing-vest-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-vest",
+        "blockId": "blk-ing-vest-nav"
+      }
+    },
+    {
+      "id": "e-vest-voltar",
+      "from": {
+        "blockId": "blk-ing-vest-nav",
+        "itemId": "vest-n1"
+      },
+      "to": {
+        "groupId": "grp-ingressar",
+        "blockId": "blk-ingressar-menu"
+      }
+    },
+    {
+      "id": "e-vest-menu",
+      "from": {
+        "blockId": "blk-ing-vest-nav",
+        "itemId": "vest-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-ing-mat-nav",
+      "from": {
+        "blockId": "blk-aud-ing-mat-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-mat",
+        "blockId": "blk-ing-mat-nav"
+      }
+    },
+    {
+      "id": "e-mat-voltar",
+      "from": {
+        "blockId": "blk-ing-mat-nav",
+        "itemId": "mat-n1"
+      },
+      "to": {
+        "groupId": "grp-ingressar",
+        "blockId": "blk-ingressar-menu"
+      }
+    },
+    {
+      "id": "e-mat-menu",
+      "from": {
+        "blockId": "blk-ing-mat-nav",
+        "itemId": "mat-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-ing-mens-nav",
+      "from": {
+        "blockId": "blk-aud-ing-mens-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-mens",
+        "blockId": "blk-ing-mens-nav"
+      }
+    },
+    {
+      "id": "e-mens-voltar",
+      "from": {
+        "blockId": "blk-ing-mens-nav",
+        "itemId": "men-n1"
+      },
+      "to": {
+        "groupId": "grp-ingressar",
+        "blockId": "blk-ingressar-menu"
+      }
+    },
+    {
+      "id": "e-mens-menu",
+      "from": {
+        "blockId": "blk-ing-mens-nav",
+        "itemId": "men-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-ing-bolsas-nav",
+      "from": {
+        "blockId": "blk-aud-ing-bolsas-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-bolsas",
+        "blockId": "blk-ing-bolsas-nav"
+      }
+    },
+    {
+      "id": "e-bolsas-voltar",
+      "from": {
+        "blockId": "blk-ing-bolsas-nav",
+        "itemId": "bol-n1"
+      },
+      "to": {
+        "groupId": "grp-ingressar",
+        "blockId": "blk-ingressar-menu"
+      }
+    },
+    {
+      "id": "e-bolsas-menu",
+      "from": {
+        "blockId": "blk-ing-bolsas-nav",
+        "itemId": "bol-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-ing-transf-nav",
+      "from": {
+        "blockId": "blk-aud-ing-transf-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-transf",
+        "blockId": "blk-ing-transf-nav"
+      }
+    },
+    {
+      "id": "e-transf-voltar",
+      "from": {
+        "blockId": "blk-ing-transf-nav",
+        "itemId": "transf-n1"
+      },
+      "to": {
+        "groupId": "grp-ingressar",
+        "blockId": "blk-ingressar-menu"
+      }
+    },
+    {
+      "id": "e-transf-menu",
+      "from": {
+        "blockId": "blk-ing-transf-nav",
+        "itemId": "transf-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-ing-enem-nav",
+      "from": {
+        "blockId": "blk-aud-ing-enem-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-enem",
+        "blockId": "blk-ing-enem-nav"
+      }
+    },
+    {
+      "id": "e-enem-voltar",
+      "from": {
+        "blockId": "blk-ing-enem-nav",
+        "itemId": "enem-n1"
+      },
+      "to": {
+        "groupId": "grp-ingressar",
+        "blockId": "blk-ingressar-menu"
+      }
+    },
+    {
+      "id": "e-enem-menu",
+      "from": {
+        "blockId": "blk-ing-enem-nav",
+        "itemId": "enem-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-conhecer-menu",
+      "from": {
+        "blockId": "blk-aud-conhecer-txt"
+      },
+      "to": {
+        "groupId": "grp-conhecer",
+        "blockId": "blk-conhecer-menu"
+      }
+    },
+    {
+      "id": "e-con-campus",
+      "from": {
+        "blockId": "blk-conhecer-menu",
+        "itemId": "con-i1"
+      },
+      "to": {
+        "groupId": "grp-con-campus"
+      }
+    },
+    {
+      "id": "e-con-estrutura",
+      "from": {
+        "blockId": "blk-conhecer-menu",
+        "itemId": "con-i2"
+      },
+      "to": {
+        "groupId": "grp-con-estrutura"
+      }
+    },
+    {
+      "id": "e-con-cursos",
+      "from": {
+        "blockId": "blk-conhecer-menu",
+        "itemId": "con-i3"
+      },
+      "to": {
+        "groupId": "grp-con-cursos"
+      }
+    },
+    {
+      "id": "e-con-posgrad",
+      "from": {
+        "blockId": "blk-conhecer-menu",
+        "itemId": "con-i4"
+      },
+      "to": {
+        "groupId": "grp-con-posgrad"
+      }
+    },
+    {
+      "id": "e-con-bib",
+      "from": {
+        "blockId": "blk-conhecer-menu",
+        "itemId": "con-i5"
+      },
+      "to": {
+        "groupId": "grp-con-bib"
+      }
+    },
+    {
+      "id": "e-con-contato",
+      "from": {
+        "blockId": "blk-conhecer-menu",
+        "itemId": "con-i6"
+      },
+      "to": {
+        "groupId": "grp-con-contato"
+      }
+    },
+    {
+      "id": "e-con-back",
+      "from": {
+        "blockId": "blk-conhecer-menu",
+        "itemId": "con-i7"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-con-campus-nav",
+      "from": {
+        "blockId": "blk-aud-con-campus-txt"
+      },
+      "to": {
+        "groupId": "grp-con-campus",
+        "blockId": "blk-con-campus-nav"
+      }
+    },
+    {
+      "id": "e-campus-voltar",
+      "from": {
+        "blockId": "blk-con-campus-nav",
+        "itemId": "camp-n1"
+      },
+      "to": {
+        "groupId": "grp-conhecer",
+        "blockId": "blk-conhecer-menu"
+      }
+    },
+    {
+      "id": "e-campus-menu",
+      "from": {
+        "blockId": "blk-con-campus-nav",
+        "itemId": "camp-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-con-estrutura-nav",
+      "from": {
+        "blockId": "blk-aud-con-estrutura-txt"
+      },
+      "to": {
+        "groupId": "grp-con-estrutura",
+        "blockId": "blk-con-estrutura-nav"
+      }
+    },
+    {
+      "id": "e-estrutura-voltar",
+      "from": {
+        "blockId": "blk-con-estrutura-nav",
+        "itemId": "est-n1"
+      },
+      "to": {
+        "groupId": "grp-conhecer",
+        "blockId": "blk-conhecer-menu"
+      }
+    },
+    {
+      "id": "e-estrutura-menu",
+      "from": {
+        "blockId": "blk-con-estrutura-nav",
+        "itemId": "est-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-con-cursos-nav",
+      "from": {
+        "blockId": "blk-aud-con-cursos-txt"
+      },
+      "to": {
+        "groupId": "grp-con-cursos",
+        "blockId": "blk-con-cursos-nav"
+      }
+    },
+    {
+      "id": "e-cursos-voltar",
+      "from": {
+        "blockId": "blk-con-cursos-nav",
+        "itemId": "cur-n1"
+      },
+      "to": {
+        "groupId": "grp-conhecer",
+        "blockId": "blk-conhecer-menu"
+      }
+    },
+    {
+      "id": "e-cursos-menu",
+      "from": {
+        "blockId": "blk-con-cursos-nav",
+        "itemId": "cur-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-con-posgrad-nav",
+      "from": {
+        "blockId": "blk-aud-con-posgrad-txt"
+      },
+      "to": {
+        "groupId": "grp-con-posgrad",
+        "blockId": "blk-con-posgrad-nav"
+      }
+    },
+    {
+      "id": "e-posgrad-voltar",
+      "from": {
+        "blockId": "blk-con-posgrad-nav",
+        "itemId": "pg-n1"
+      },
+      "to": {
+        "groupId": "grp-conhecer",
+        "blockId": "blk-conhecer-menu"
+      }
+    },
+    {
+      "id": "e-posgrad-menu",
+      "from": {
+        "blockId": "blk-con-posgrad-nav",
+        "itemId": "pg-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-con-bib-nav",
+      "from": {
+        "blockId": "blk-aud-con-bib-txt"
+      },
+      "to": {
+        "groupId": "grp-con-bib",
+        "blockId": "blk-con-bib-nav"
+      }
+    },
+    {
+      "id": "e-bib-voltar",
+      "from": {
+        "blockId": "blk-con-bib-nav",
+        "itemId": "bib-n1"
+      },
+      "to": {
+        "groupId": "grp-conhecer",
+        "blockId": "blk-conhecer-menu"
+      }
+    },
+    {
+      "id": "e-bib-menu",
+      "from": {
+        "blockId": "blk-con-bib-nav",
+        "itemId": "bib-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-con-contato-nav",
+      "from": {
+        "blockId": "blk-aud-con-contato-txt"
+      },
+      "to": {
+        "groupId": "grp-con-contato",
+        "blockId": "blk-con-contato-nav"
+      }
+    },
+    {
+      "id": "e-contato-voltar",
+      "from": {
+        "blockId": "blk-con-contato-nav",
+        "itemId": "ct-n1"
+      },
+      "to": {
+        "groupId": "grp-conhecer",
+        "blockId": "blk-conhecer-menu"
+      }
+    },
+    {
+      "id": "e-contato-menu",
+      "from": {
+        "blockId": "blk-con-contato-nav",
+        "itemId": "ct-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-aluno-menu",
+      "from": {
+        "blockId": "blk-aud-aluno-txt"
+      },
+      "to": {
+        "groupId": "grp-aluno",
+        "blockId": "blk-aluno-menu"
+      }
+    },
+    {
+      "id": "e-alu-ead",
+      "from": {
+        "blockId": "blk-aluno-menu",
+        "itemId": "alu-i1"
+      },
+      "to": {
+        "groupId": "grp-alu-ead"
+      }
+    },
+    {
+      "id": "e-alu-estagios",
+      "from": {
+        "blockId": "blk-aluno-menu",
+        "itemId": "alu-i2"
+      },
+      "to": {
+        "groupId": "grp-alu-estagios"
+      }
+    },
+    {
+      "id": "e-alu-acc",
+      "from": {
+        "blockId": "blk-aluno-menu",
+        "itemId": "alu-i3"
+      },
+      "to": {
+        "groupId": "grp-alu-acc"
+      }
+    },
+    {
+      "id": "e-alu-magikey",
+      "from": {
+        "blockId": "blk-aluno-menu",
+        "itemId": "alu-i4"
+      },
+      "to": {
+        "groupId": "grp-alu-magikey"
+      }
+    },
+    {
+      "id": "e-alu-provas",
+      "from": {
+        "blockId": "blk-aluno-menu",
+        "itemId": "alu-i5"
+      },
+      "to": {
+        "groupId": "grp-alu-provas"
+      }
+    },
+    {
+      "id": "e-alu-calendario",
+      "from": {
+        "blockId": "blk-aluno-menu",
+        "itemId": "alu-i6"
+      },
+      "to": {
+        "groupId": "grp-alu-calendario"
+      }
+    },
+    {
+      "id": "e-alu-classroom",
+      "from": {
+        "blockId": "blk-aluno-menu",
+        "itemId": "alu-i7"
+      },
+      "to": {
+        "groupId": "grp-alu-classroom"
+      }
+    },
+    {
+      "id": "e-alu-financeiro",
+      "from": {
+        "blockId": "blk-aluno-menu",
+        "itemId": "alu-i8"
+      },
+      "to": {
+        "groupId": "grp-alu-financeiro"
+      }
+    },
+    {
+      "id": "e-alu-secretaria",
+      "from": {
+        "blockId": "blk-aluno-menu",
+        "itemId": "alu-i9"
+      },
+      "to": {
+        "groupId": "grp-alu-secretaria"
+      }
+    },
+    {
+      "id": "e-alu-back",
+      "from": {
+        "blockId": "blk-aluno-menu",
+        "itemId": "alu-i10"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-alu-ead-nav",
+      "from": {
+        "blockId": "blk-aud-alu-ead-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-ead",
+        "blockId": "blk-alu-ead-nav"
+      }
+    },
+    {
+      "id": "e-ead-voltar",
+      "from": {
+        "blockId": "blk-alu-ead-nav",
+        "itemId": "ead-n1"
+      },
+      "to": {
+        "groupId": "grp-aluno",
+        "blockId": "blk-aluno-menu"
+      }
+    },
+    {
+      "id": "e-ead-menu",
+      "from": {
+        "blockId": "blk-alu-ead-nav",
+        "itemId": "ead-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-alu-estagios-nav",
+      "from": {
+        "blockId": "blk-aud-alu-estagios-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-estagios",
+        "blockId": "blk-alu-estagios-nav"
+      }
+    },
+    {
+      "id": "e-estagios-voltar",
+      "from": {
+        "blockId": "blk-alu-estagios-nav",
+        "itemId": "stg-n1"
+      },
+      "to": {
+        "groupId": "grp-aluno",
+        "blockId": "blk-aluno-menu"
+      }
+    },
+    {
+      "id": "e-estagios-menu",
+      "from": {
+        "blockId": "blk-alu-estagios-nav",
+        "itemId": "stg-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-alu-acc-nav",
+      "from": {
+        "blockId": "blk-aud-alu-acc-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-acc",
+        "blockId": "blk-alu-acc-nav"
+      }
+    },
+    {
+      "id": "e-acc-voltar",
+      "from": {
+        "blockId": "blk-alu-acc-nav",
+        "itemId": "acc-n1"
+      },
+      "to": {
+        "groupId": "grp-aluno",
+        "blockId": "blk-aluno-menu"
+      }
+    },
+    {
+      "id": "e-acc-menu",
+      "from": {
+        "blockId": "blk-alu-acc-nav",
+        "itemId": "acc-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-alu-magikey-nav",
+      "from": {
+        "blockId": "blk-aud-alu-magikey-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-magikey",
+        "blockId": "blk-alu-magikey-nav"
+      }
+    },
+    {
+      "id": "e-magikey-voltar",
+      "from": {
+        "blockId": "blk-alu-magikey-nav",
+        "itemId": "mk-n1"
+      },
+      "to": {
+        "groupId": "grp-aluno",
+        "blockId": "blk-aluno-menu"
+      }
+    },
+    {
+      "id": "e-magikey-menu",
+      "from": {
+        "blockId": "blk-alu-magikey-nav",
+        "itemId": "mk-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-alu-provas-nav",
+      "from": {
+        "blockId": "blk-aud-alu-provas-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-provas",
+        "blockId": "blk-alu-provas-nav"
+      }
+    },
+    {
+      "id": "e-provas-voltar",
+      "from": {
+        "blockId": "blk-alu-provas-nav",
+        "itemId": "prv-n1"
+      },
+      "to": {
+        "groupId": "grp-aluno",
+        "blockId": "blk-aluno-menu"
+      }
+    },
+    {
+      "id": "e-provas-menu",
+      "from": {
+        "blockId": "blk-alu-provas-nav",
+        "itemId": "prv-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-alu-calendario-nav",
+      "from": {
+        "blockId": "blk-aud-alu-calendario-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-calendario",
+        "blockId": "blk-alu-calendario-nav"
+      }
+    },
+    {
+      "id": "e-calendario-voltar",
+      "from": {
+        "blockId": "blk-alu-calendario-nav",
+        "itemId": "cal-n1"
+      },
+      "to": {
+        "groupId": "grp-aluno",
+        "blockId": "blk-aluno-menu"
+      }
+    },
+    {
+      "id": "e-calendario-menu",
+      "from": {
+        "blockId": "blk-alu-calendario-nav",
+        "itemId": "cal-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-alu-classroom-nav",
+      "from": {
+        "blockId": "blk-aud-alu-classroom-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-classroom",
+        "blockId": "blk-alu-classroom-nav"
+      }
+    },
+    {
+      "id": "e-classroom-voltar",
+      "from": {
+        "blockId": "blk-alu-classroom-nav",
+        "itemId": "gcl-n1"
+      },
+      "to": {
+        "groupId": "grp-aluno",
+        "blockId": "blk-aluno-menu"
+      }
+    },
+    {
+      "id": "e-classroom-menu",
+      "from": {
+        "blockId": "blk-alu-classroom-nav",
+        "itemId": "gcl-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-alu-financeiro-nav",
+      "from": {
+        "blockId": "blk-aud-alu-financeiro-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-financeiro",
+        "blockId": "blk-alu-financeiro-nav"
+      }
+    },
+    {
+      "id": "e-financeiro-voltar",
+      "from": {
+        "blockId": "blk-alu-financeiro-nav",
+        "itemId": "fin-n1"
+      },
+      "to": {
+        "groupId": "grp-aluno",
+        "blockId": "blk-aluno-menu"
+      }
+    },
+    {
+      "id": "e-financeiro-menu",
+      "from": {
+        "blockId": "blk-alu-financeiro-nav",
+        "itemId": "fin-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-alu-secretaria-nav",
+      "from": {
+        "blockId": "blk-aud-alu-secretaria-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-secretaria",
+        "blockId": "blk-alu-secretaria-nav"
+      }
+    },
+    {
+      "id": "e-secretaria-voltar",
+      "from": {
+        "blockId": "blk-alu-secretaria-nav",
+        "itemId": "sec-n1"
+      },
+      "to": {
+        "groupId": "grp-aluno",
+        "blockId": "blk-aluno-menu"
+      }
+    },
+    {
+      "id": "e-secretaria-menu",
+      "from": {
+        "blockId": "blk-alu-secretaria-nav",
+        "itemId": "sec-n2"
+      },
+      "to": {
+        "groupId": "grp-welcome"
+      }
+    },
+    {
+      "id": "e-blk-welcome-txt-to-el",
+      "from": {
+        "blockId": "blk-welcome-txt"
+      },
+      "to": {
+        "groupId": "grp-welcome",
+        "blockId": "blk-el-welcome-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-welcome-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-welcome-txt"
+      },
+      "to": {
+        "groupId": "grp-welcome",
+        "blockId": "blk-aud-welcome-txt"
+      }
+    },
+    {
+      "id": "e-blk-ingressar-txt-to-el",
+      "from": {
+        "blockId": "blk-ingressar-txt"
+      },
+      "to": {
+        "groupId": "grp-ingressar",
+        "blockId": "blk-el-ingressar-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-ingressar-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-ingressar-txt"
+      },
+      "to": {
+        "groupId": "grp-ingressar",
+        "blockId": "blk-aud-ingressar-txt"
+      }
+    },
+    {
+      "id": "e-blk-ing-vest-txt-to-el",
+      "from": {
+        "blockId": "blk-ing-vest-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-vest",
+        "blockId": "blk-el-ing-vest-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-ing-vest-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-ing-vest-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-vest",
+        "blockId": "blk-aud-ing-vest-txt"
+      }
+    },
+    {
+      "id": "e-blk-ing-mat-txt-to-el",
+      "from": {
+        "blockId": "blk-ing-mat-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-mat",
+        "blockId": "blk-el-ing-mat-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-ing-mat-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-ing-mat-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-mat",
+        "blockId": "blk-aud-ing-mat-txt"
+      }
+    },
+    {
+      "id": "e-blk-ing-mens-txt-to-el",
+      "from": {
+        "blockId": "blk-ing-mens-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-mens",
+        "blockId": "blk-el-ing-mens-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-ing-mens-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-ing-mens-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-mens",
+        "blockId": "blk-aud-ing-mens-txt"
+      }
+    },
+    {
+      "id": "e-blk-ing-bolsas-txt-to-el",
+      "from": {
+        "blockId": "blk-ing-bolsas-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-bolsas",
+        "blockId": "blk-el-ing-bolsas-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-ing-bolsas-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-ing-bolsas-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-bolsas",
+        "blockId": "blk-aud-ing-bolsas-txt"
+      }
+    },
+    {
+      "id": "e-blk-ing-transf-txt-to-el",
+      "from": {
+        "blockId": "blk-ing-transf-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-transf",
+        "blockId": "blk-el-ing-transf-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-ing-transf-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-ing-transf-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-transf",
+        "blockId": "blk-aud-ing-transf-txt"
+      }
+    },
+    {
+      "id": "e-blk-ing-enem-txt-to-el",
+      "from": {
+        "blockId": "blk-ing-enem-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-enem",
+        "blockId": "blk-el-ing-enem-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-ing-enem-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-ing-enem-txt"
+      },
+      "to": {
+        "groupId": "grp-ing-enem",
+        "blockId": "blk-aud-ing-enem-txt"
+      }
+    },
+    {
+      "id": "e-blk-conhecer-txt-to-el",
+      "from": {
+        "blockId": "blk-conhecer-txt"
+      },
+      "to": {
+        "groupId": "grp-conhecer",
+        "blockId": "blk-el-conhecer-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-conhecer-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-conhecer-txt"
+      },
+      "to": {
+        "groupId": "grp-conhecer",
+        "blockId": "blk-aud-conhecer-txt"
+      }
+    },
+    {
+      "id": "e-blk-con-campus-txt-to-el",
+      "from": {
+        "blockId": "blk-con-campus-txt"
+      },
+      "to": {
+        "groupId": "grp-con-campus",
+        "blockId": "blk-el-con-campus-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-con-campus-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-con-campus-txt"
+      },
+      "to": {
+        "groupId": "grp-con-campus",
+        "blockId": "blk-aud-con-campus-txt"
+      }
+    },
+    {
+      "id": "e-blk-con-estrutura-txt-to-el",
+      "from": {
+        "blockId": "blk-con-estrutura-txt"
+      },
+      "to": {
+        "groupId": "grp-con-estrutura",
+        "blockId": "blk-el-con-estrutura-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-con-estrutura-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-con-estrutura-txt"
+      },
+      "to": {
+        "groupId": "grp-con-estrutura",
+        "blockId": "blk-aud-con-estrutura-txt"
+      }
+    },
+    {
+      "id": "e-blk-con-cursos-txt-to-el",
+      "from": {
+        "blockId": "blk-con-cursos-txt"
+      },
+      "to": {
+        "groupId": "grp-con-cursos",
+        "blockId": "blk-el-con-cursos-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-con-cursos-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-con-cursos-txt"
+      },
+      "to": {
+        "groupId": "grp-con-cursos",
+        "blockId": "blk-aud-con-cursos-txt"
+      }
+    },
+    {
+      "id": "e-blk-con-posgrad-txt-to-el",
+      "from": {
+        "blockId": "blk-con-posgrad-txt"
+      },
+      "to": {
+        "groupId": "grp-con-posgrad",
+        "blockId": "blk-el-con-posgrad-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-con-posgrad-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-con-posgrad-txt"
+      },
+      "to": {
+        "groupId": "grp-con-posgrad",
+        "blockId": "blk-aud-con-posgrad-txt"
+      }
+    },
+    {
+      "id": "e-blk-con-bib-txt-to-el",
+      "from": {
+        "blockId": "blk-con-bib-txt"
+      },
+      "to": {
+        "groupId": "grp-con-bib",
+        "blockId": "blk-el-con-bib-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-con-bib-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-con-bib-txt"
+      },
+      "to": {
+        "groupId": "grp-con-bib",
+        "blockId": "blk-aud-con-bib-txt"
+      }
+    },
+    {
+      "id": "e-blk-con-contato-txt-to-el",
+      "from": {
+        "blockId": "blk-con-contato-txt"
+      },
+      "to": {
+        "groupId": "grp-con-contato",
+        "blockId": "blk-el-con-contato-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-con-contato-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-con-contato-txt"
+      },
+      "to": {
+        "groupId": "grp-con-contato",
+        "blockId": "blk-aud-con-contato-txt"
+      }
+    },
+    {
+      "id": "e-blk-aluno-txt-to-el",
+      "from": {
+        "blockId": "blk-aluno-txt"
+      },
+      "to": {
+        "groupId": "grp-aluno",
+        "blockId": "blk-el-aluno-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-aluno-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-aluno-txt"
+      },
+      "to": {
+        "groupId": "grp-aluno",
+        "blockId": "blk-aud-aluno-txt"
+      }
+    },
+    {
+      "id": "e-blk-alu-ead-txt-to-el",
+      "from": {
+        "blockId": "blk-alu-ead-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-ead",
+        "blockId": "blk-el-alu-ead-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-alu-ead-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-alu-ead-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-ead",
+        "blockId": "blk-aud-alu-ead-txt"
+      }
+    },
+    {
+      "id": "e-blk-alu-estagios-txt-to-el",
+      "from": {
+        "blockId": "blk-alu-estagios-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-estagios",
+        "blockId": "blk-el-alu-estagios-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-alu-estagios-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-alu-estagios-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-estagios",
+        "blockId": "blk-aud-alu-estagios-txt"
+      }
+    },
+    {
+      "id": "e-blk-alu-acc-txt-to-el",
+      "from": {
+        "blockId": "blk-alu-acc-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-acc",
+        "blockId": "blk-el-alu-acc-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-alu-acc-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-alu-acc-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-acc",
+        "blockId": "blk-aud-alu-acc-txt"
+      }
+    },
+    {
+      "id": "e-blk-alu-magikey-txt-to-el",
+      "from": {
+        "blockId": "blk-alu-magikey-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-magikey",
+        "blockId": "blk-el-alu-magikey-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-alu-magikey-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-alu-magikey-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-magikey",
+        "blockId": "blk-aud-alu-magikey-txt"
+      }
+    },
+    {
+      "id": "e-blk-alu-provas-txt-to-el",
+      "from": {
+        "blockId": "blk-alu-provas-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-provas",
+        "blockId": "blk-el-alu-provas-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-alu-provas-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-alu-provas-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-provas",
+        "blockId": "blk-aud-alu-provas-txt"
+      }
+    },
+    {
+      "id": "e-blk-alu-calendario-txt-to-el",
+      "from": {
+        "blockId": "blk-alu-calendario-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-calendario",
+        "blockId": "blk-el-alu-calendario-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-alu-calendario-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-alu-calendario-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-calendario",
+        "blockId": "blk-aud-alu-calendario-txt"
+      }
+    },
+    {
+      "id": "e-blk-alu-classroom-txt-to-el",
+      "from": {
+        "blockId": "blk-alu-classroom-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-classroom",
+        "blockId": "blk-el-alu-classroom-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-alu-classroom-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-alu-classroom-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-classroom",
+        "blockId": "blk-aud-alu-classroom-txt"
+      }
+    },
+    {
+      "id": "e-blk-alu-financeiro-txt-to-el",
+      "from": {
+        "blockId": "blk-alu-financeiro-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-financeiro",
+        "blockId": "blk-el-alu-financeiro-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-alu-financeiro-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-alu-financeiro-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-financeiro",
+        "blockId": "blk-aud-alu-financeiro-txt"
+      }
+    },
+    {
+      "id": "e-blk-alu-secretaria-txt-to-el",
+      "from": {
+        "blockId": "blk-alu-secretaria-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-secretaria",
+        "blockId": "blk-el-alu-secretaria-txt"
+      }
+    },
+    {
+      "id": "e-blk-el-alu-secretaria-txt-to-aud",
+      "from": {
+        "blockId": "blk-el-alu-secretaria-txt"
+      },
+      "to": {
+        "groupId": "grp-alu-secretaria",
+        "blockId": "blk-aud-alu-secretaria-txt"
+      }
+    }
+  ],
+  "variables": [
+    {
+      "id": "var-audioUrl",
+      "name": "audioUrl",
+      "isSessionVariable": true
+    }
+  ],
+  "theme": {},
+  "selectedThemeTemplateId": null,
+  "settings": {
+    "general": {
+      "isBrandingEnabled": true
+    }
+  },
+  "createdAt": "2026-05-16T22:47:49.235Z",
+  "updatedAt": "2026-05-17T03:30:00.000Z",
+  "icon": null,
+  "folderId": null,
+  "publicId": null,
+  "customDomain": null,
+  "workspaceId": "cmp8q4s4a00000ckkuxkzzps2",
+  "resultsTablePreferences": null,
+  "isArchived": false,
+  "isClosed": false,
+  "whatsAppCredentialsId": null,
+  "riskLevel": null,
+  "spaceId": null
+}
