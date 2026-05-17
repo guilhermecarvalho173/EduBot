@@ -40,7 +40,7 @@ export function useTypebotChat(options?: UseTypebotChatOptions) {
       try {
         const currentSessionId = sessionIdRef.current;
 
-        const response = await fetch('http://localhost:9999/.netlify/functions/typebot-proxy', {
+        const response = await fetch('/.netlify/functions/typebot-proxy', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
