@@ -1,2 +1,2 @@
 # EduBot
-Código para executar no TypeBot
+Código para executar assistente virtual no TypeBot
