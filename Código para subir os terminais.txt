@@ -1,0 +1,5 @@
+Terminal 1: cd C:\Users\"Intel I3"\OneDrive\"Área de Trabalho"\EduBot\frontend
+npm run dev
+
+Terminal 2: cd C:\Users\"Intel I3"\OneDrive\"Área de Trabalho"\EduBot
+netlify functions:serve
