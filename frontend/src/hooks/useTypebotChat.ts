@@ -24,18 +24,21 @@ export function useTypebotChat(options?: UseTypebotChatOptions) {
   const [error, setError] = useState<string | null>(null);
 
   const sendMessage = useCallback(
-    async (userMessage: string) => {
+    async (userMessage: string, initialTopic?: string) => {
       if (!userMessage.trim()) return;
 
       setLoading(true);
       setError(null);
 
-      const userMsg: ChatMessage = {
-        role: 'user',
-        content: userMessage.trim(),
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, userMsg]);
+      // Só mostra a mensagem do usuário se não for disparo automático de card
+      if (!initialTopic) {
+        const userMsg: ChatMessage = {
+          role: 'user',
+          content: userMessage.trim(),
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, userMsg]);
+      }
 
       try {
         const currentSessionId = sessionIdRef.current;
@@ -47,6 +50,8 @@ export function useTypebotChat(options?: UseTypebotChatOptions) {
             message: userMessage.trim(),
             sessionId: currentSessionId,
             typebotId: options?.typebotId,
+            // Passa o initialTopic só na primeira chamada (sem sessionId)
+            initialTopic: !currentSessionId ? initialTopic : undefined,
           }),
         });
 

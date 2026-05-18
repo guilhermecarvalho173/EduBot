@@ -24,7 +24,7 @@ export function ChatWindow({ isOpen, onClose, typebotId, initialMessage }: ChatW
   useEffect(() => {
     if (isOpen && !startedRef.current) {
       startedRef.current = true;
-      // Se veio de um card, envia o tema diretamente; senão envia "Olá"
+      // Se veio de um card, envia o tema e passa como initialTopic para o proxy fazer a navegação direta
       sendMessage(initialMessage || 'Olá', initialMessage || undefined);
     }
     // Ao fechar, reseta para permitir nova conversa na próxima abertura
