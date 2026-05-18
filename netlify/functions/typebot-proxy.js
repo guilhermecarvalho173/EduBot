@@ -4,37 +4,29 @@
  *
  * Quando recebe initialTopic, faz duas chamadas em sequência:
  * 1. startChat (boas-vindas, descartada)
- * 2. continueChat com o botão do menu principal correto
- * 3. Se necessário, uma terceira chamada para navegar ao subtema
+ * 2. continueChat com o tema do card escolhido
  */
 
-const TYPEBOT_ID = process.env.TYPEBOT_ID || 'dkvwmm5wrjz671sfazexy0x0';
+const TYPEBOT_ID = process.env.TYPEBOT_ID || 'edubot-uscs-1m67yud';
 
-// Mapeia o título do card para:
-// - menuButton: botão do menu principal a clicar
-// - subButton: botão do submenu (se aplicável)
+// Mapeia o título do card para o texto exato do botão no fluxo Typebot
 const TOPIC_MAP = {
-  // ── Quero Ingressar ──────────────────────────────────────────
-  'Vestibular':             { menuButton: '🎓 Desejo ingressar na USCS', subButton: '✏️ Vestibular' },
-  'Matrícula':              { menuButton: '🎓 Desejo ingressar na USCS', subButton: '📝 Matrículas' },
-  'Mensalidades':           { menuButton: '🎓 Desejo ingressar na USCS', subButton: '💵 Mensalidades' },
-  'Bolsas e financiamentos':{ menuButton: '🎓 Desejo ingressar na USCS', subButton: '🎁 Bolsas e Financiamentos' },
-
-  // ── Conhecer a USCS ──────────────────────────────────────────
-  'Localização':            { menuButton: '🏛️ Estou interessado em conhecer mais sobre a USCS', subButton: '📍 Endereço dos Campus' },
-  'Biblioteca':             { menuButton: '🏛️ Estou interessado em conhecer mais sobre a USCS', subButton: '📖 Biblioteca' },
-  'Pós-graduação':          { menuButton: '🏛️ Estou interessado em conhecer mais sobre a USCS', subButton: '📚 Pós-Graduação' },
-  'Transporte':             { menuButton: '🏛️ Estou interessado em conhecer mais sobre a USCS', subButton: '📍 Endereço dos Campus' },
-  'Eventos':                { menuButton: '🏛️ Estou interessado em conhecer mais sobre a USCS', subButton: '🏛️ Informações Institucionais' },
-
-  // ── Já sou Aluno ─────────────────────────────────────────────
-  'EAD':                    { menuButton: '📚 Já sou aluno da USCS', subButton: '💻 Materiais e Plataforma EAD' },
-  'Estágios e carreiras':   { menuButton: '📚 Já sou aluno da USCS', subButton: '💼 Estágios e Programas' },
-  'Magikey':                { menuButton: '📚 Já sou aluno da USCS', subButton: '🔑 Acesso com MagiKey' },
-  'Calendário acadêmico':   { menuButton: '📚 Já sou aluno da USCS', subButton: '📅 Calendário Acadêmico' },
-  'Notas e avaliações':     { menuButton: '📚 Já sou aluno da USCS', subButton: '📝 Sistema de Provas' },
-  'Tecnologia e sistemas':  { menuButton: '📚 Já sou aluno da USCS', subButton: '💻 Materiais e Plataforma EAD' },
-  'Secretaria':             { menuButton: '📚 Já sou aluno da USCS', subButton: '📄 Secretaria Acadêmica' },
+  'Matrícula':              '📝 Matrículas',
+  'Vestibular':             '✏️ Vestibular',
+  'Mensalidades':           '💵 Mensalidades',
+  'Bolsas e financiamentos':'🎁 Bolsas e Financiamentos',
+  'Biblioteca':             '🏛️ Estou interessado em conhecer mais sobre a USCS',
+  'Estágios e carreiras':   '📚 Já sou aluno da USCS',
+  'EAD':                    '📚 Já sou aluno da USCS',
+  'Magikey':                '📚 Já sou aluno da USCS',
+  'Calendário acadêmico':   '📚 Já sou aluno da USCS',
+  'Notas e avaliações':     '📚 Já sou aluno da USCS',
+  'Tecnologia e sistemas':  '📚 Já sou aluno da USCS',
+  'Secretaria':             '📚 Já sou aluno da USCS',
+  'Localização':            '🏛️ Estou interessado em conhecer mais sobre a USCS',
+  'Pós-graduação':          '🏛️ Estou interessado em conhecer mais sobre a USCS',
+  'Transporte':             '🏛️ Estou interessado em conhecer mais sobre a USCS',
+  'Eventos':                '🏛️ Estou interessado em conhecer mais sobre a USCS',
 };
 
 async function callTypebot(url, message) {
@@ -114,9 +106,9 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // ── Conversa já iniciada ──────────────────────────────────────────────
+    // ── Fluxo normal (conversa já iniciada) ──────────────────────────────
     if (sessionId) {
-      const url = `https://typebot.io/api/v1/sessions/${sessionId}/continueChat`;
+      const url = `https://app.typebot.com/api/v1/sessions/${sessionId}/continueChat`;
       const result = await callTypebot(url, message.trim());
 
       if (!result.ok || !result.data) {
@@ -128,6 +120,8 @@ exports.handler = async (event, context) => {
       }
 
       const { botText, buttons } = extractResponse(result.data);
+      console.log(`[Typebot] continueChat | Texto: "${botText}" | Botões: ${buttons.length}`);
+
       return {
         statusCode: 200,
         headers,
@@ -141,38 +135,40 @@ exports.handler = async (event, context) => {
       };
     }
 
-    const startUrl = `https://typebot.io/api/v1/typebots/${TYPEBOT_ID}/startChat`;
+    // ── Nova sessão vinda de um card ──────────────────────────────────────
+    const startUrl = `https://app.typebot.com/api/v1/typebots/${TYPEBOT_ID}/startChat`;
 
-    // ── Nova sessão vinda de um card (navega direto ao subtema) ───────────
-    if (initialTopic && TOPIC_MAP[initialTopic]) {
-      const { menuButton, subButton } = TOPIC_MAP[initialTopic];
-
-      // Passo 1: inicia sessão (descarta boas-vindas)
+    if (initialTopic) {
+      // Passo 1: inicia a sessão (descarta boas-vindas)
       console.log(`[Typebot] startChat para topic: "${initialTopic}"`);
       const start = await callTypebot(startUrl, 'Olá');
+
       if (!start.ok || !start.data) {
-        return { statusCode: 502, headers, body: JSON.stringify({ error: 'Erro ao iniciar sessão' }) };
+        return {
+          statusCode: 502,
+          headers,
+          body: JSON.stringify({ error: 'Erro ao iniciar sessão Typebot', details: start.data })
+        };
       }
 
-      const sid = start.data.sessionId;
-      const continueUrl = `https://typebot.io/api/v1/sessions/${sid}/continueChat`;
+      const newSessionId = start.data.sessionId;
 
-      // Passo 2: clica no botão do menu principal
-      console.log(`[Typebot] menuButton: "${menuButton}"`);
-      const second = await callTypebot(continueUrl, menuButton);
+      // Passo 2: envia o menu principal correto para o tema
+      const topicButton = TOPIC_MAP[initialTopic] || message.trim();
+      console.log(`[Typebot] continueChat com botão: "${topicButton}"`);
+      const continueUrl = `https://app.typebot.com/api/v1/sessions/${newSessionId}/continueChat`;
+      const second = await callTypebot(continueUrl, topicButton);
+
       if (!second.ok || !second.data) {
-        return { statusCode: 502, headers, body: JSON.stringify({ error: 'Erro ao navegar para menu' }) };
+        return {
+          statusCode: 502,
+          headers,
+          body: JSON.stringify({ error: 'Erro ao navegar para o tema', details: second.data })
+        };
       }
 
-      // Passo 3: clica no botão do submenu
-      console.log(`[Typebot] subButton: "${subButton}"`);
-      const third = await callTypebot(continueUrl, subButton);
-      if (!third.ok || !third.data) {
-        return { statusCode: 502, headers, body: JSON.stringify({ error: 'Erro ao navegar para subtema' }) };
-      }
-
-      const { botText, buttons } = extractResponse(third.data);
-      console.log(`[Typebot] Resposta: "${botText}" | Botões: ${buttons.length}`);
+      const { botText, buttons } = extractResponse(second.data);
+      console.log(`[Typebot] Tema: "${botText}" | Botões: ${buttons.length}`);
 
       return {
         statusCode: 200,
@@ -181,7 +177,7 @@ exports.handler = async (event, context) => {
           success: true,
           response: botText,
           buttons,
-          sessionId: third.data.sessionId || sid,
+          sessionId: second.data.sessionId || newSessionId,
           timestamp: new Date().toISOString()
         })
       };
@@ -190,11 +186,17 @@ exports.handler = async (event, context) => {
     // ── Nova sessão normal (botão flutuante) ──────────────────────────────
     console.log(`[Typebot] startChat normal`);
     const start = await callTypebot(startUrl, message.trim());
+
     if (!start.ok || !start.data) {
-      return { statusCode: 502, headers, body: JSON.stringify({ error: 'Erro ao iniciar Typebot' }) };
+      return {
+        statusCode: 502,
+        headers,
+        body: JSON.stringify({ error: 'Erro ao iniciar Typebot', details: start.data })
+      };
     }
 
     const { botText, buttons } = extractResponse(start.data);
+
     return {
       statusCode: 200,
       headers,
