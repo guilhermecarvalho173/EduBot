@@ -15,7 +15,9 @@
  */
 
 const TYPEBOT_ID = process.env.TYPEBOT_ID || 'edubot-uscs-1m67yud';
-const TYPEBOT_API_BASE = process.env.TYPEBOT_API_BASE || 'https://app.typebot.com/api/v1';
+// Suporta tanto TYPEBOT_API_URL (documentado) quanto TYPEBOT_API_BASE (legado)
+const TYPEBOT_API_BASE = process.env.TYPEBOT_API_URL || process.env.TYPEBOT_API_BASE || 'https://typebot.io/api/v1';
+const TYPEBOT_API_KEY = process.env.TYPEBOT_API_KEY || null;
 const REQUEST_TIMEOUT = 10000; // 10 segundos
 const MAX_RETRIES = 2;
 
@@ -99,7 +101,8 @@ async function callTypebot(url, message, logger, retryCount = 0) {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
-        'User-Agent': 'Typebot-Proxy/1.0'
+        'User-Agent': 'Typebot-Proxy/1.0',
+        ...(TYPEBOT_API_KEY ? { 'Authorization': `Bearer ${TYPEBOT_API_KEY}` } : {})
       },
       body: requestBody,
       signal: controller.signal
