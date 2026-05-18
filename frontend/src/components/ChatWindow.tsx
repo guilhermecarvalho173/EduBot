@@ -25,7 +25,7 @@ export function ChatWindow({ isOpen, onClose, typebotId, initialMessage }: ChatW
     if (isOpen && !startedRef.current) {
       startedRef.current = true;
       // Se veio de um card, envia o tema diretamente; senão envia "Olá"
-      sendMessage(initialMessage || 'Olá');
+      sendMessage(initialMessage || 'Olá', initialMessage || undefined);
     }
     // Ao fechar, reseta para permitir nova conversa na próxima abertura
     if (!isOpen) {
