@@ -8,7 +8,7 @@
  * 3. Se necessário, uma terceira chamada para navegar ao subtema
  */
 
-const TYPEBOT_ID = process.env.TYPEBOT_ID || 'edubot-uscs-1m67yud';
+const TYPEBOT_ID = process.env.TYPEBOT_ID || 'dkvwmm5wrjz671sfazexy0x0';
 
 // Mapeia o título do card para:
 // - menuButton: botão do menu principal a clicar

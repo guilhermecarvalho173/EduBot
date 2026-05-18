@@ -107,7 +107,7 @@ export default function App() {
       <ChatWindow
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        typebotId="edubot-uscs-1m67yud"
+        typebotId="dkvwmm5wrjz671sfazexy0x0"
         initialMessage={initialMessage}
       />
     </div>
