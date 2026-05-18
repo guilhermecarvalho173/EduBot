@@ -85,10 +85,13 @@ async function callTypebot(url, message, logger, retryCount = 0) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
 
+  // message=null indica startChat — envia body vazio (sem campo message)
+  const requestBody = message !== null ? JSON.stringify({ message }) : '{}';
+
   try {
     logger.debug('Iniciando requisição Typebot', {
       url,
-      messageLength: message.length,
+      messageLength: message ? message.length : 0,
       retryCount
     });
 
@@ -98,7 +101,7 @@ async function callTypebot(url, message, logger, retryCount = 0) {
         'Content-Type': 'application/json',
         'User-Agent': 'Typebot-Proxy/1.0'
       },
-      body: JSON.stringify({ message }),
+      body: requestBody,
       signal: controller.signal
     });
 
@@ -390,7 +393,7 @@ exports.handler = async (event, context) => {
         typebotId: TYPEBOT_ID
       });
 
-      const start = await callTypebot(startUrl, 'Olá', logger);
+      const start = await callTypebot(startUrl, null, logger);
 
       if (!start.ok || !start.data) {
         logger.error('Falha em startChat', {
@@ -489,7 +492,7 @@ exports.handler = async (event, context) => {
     logger.info('Fluxo: Nova sessão normal via startChat');
 
     const startUrl = `${TYPEBOT_API_BASE}/typebots/${TYPEBOT_ID}/startChat`;
-    const start = await callTypebot(startUrl, message.trim(), logger);
+    const start = await callTypebot(startUrl, null, logger);
 
     if (!start.ok || !start.data) {
       logger.error('Falha em startChat', {
