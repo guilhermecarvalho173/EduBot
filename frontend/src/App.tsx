@@ -82,7 +82,16 @@ export default function App() {
           <p>Estou aqui para tirar suas dúvidas sobre a Universidade Municipal de São Caetano do Sul.</p>
           <p>É só clicar em um tema para ver as informações!</p>
         </div>
-        <div className="mascot-image">🤖</div>
+        <div className="mascot-image">
+          <video
+            src="/videos/edubot.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            style={{ width: '100%', borderRadius: '12px' }}
+          />
+        </div>
       </aside>
 
       {/* Botão flutuante */}
